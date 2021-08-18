@@ -11,7 +11,7 @@ import lombok.Data;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
-@Entity(name = "marca")
+@Entity
 public class Marca {
 
     @Id @GeneratedValue(strategy = IDENTITY)
