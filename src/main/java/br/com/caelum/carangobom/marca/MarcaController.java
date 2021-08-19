@@ -40,20 +40,30 @@ public class MarcaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Marca> cadastra(@Valid @RequestBody Marca marca, UriComponentsBuilder uriBuilder) {
-        Marca marcaResponse = marcaRepository.save(marca);
+    public ResponseEntity<MarcaMapper> cadastra(@Valid @RequestBody MarcaForm marcaDto, UriComponentsBuilder uriBuilder) {
+        Marca marca = marcaDto.convertToMarca();
+        marca = marcaRepository.save(marca);
         URI location = uriBuilder.path("/marcas/{id}").buildAndExpand(marca.getId()).toUri();
-        return ResponseEntity.created(location).body(marcaResponse);
+        return ResponseEntity.created(location).body(new MarcaMapper(marca));
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Marca> altera(@PathVariable Long id, @Valid @RequestBody Marca marca) {
+    public ResponseEntity<MarcaMapper> altera(@PathVariable Long id, @Valid @RequestBody MarcaForm marcaDto) {
         Optional<Marca> optional = marcaRepository.findById(id);
+
+        System.out.println("optional " + optional);
+        System.out.println("marcaDto " + marcaDto);
+
         if (optional.isPresent()) {
-            Marca marcaFound = optional.get();
-            marcaFound.setNome(marca.getNome());
-            return ResponseEntity.ok(marcaFound);
+            Marca marca = marcaDto.convertToMarca();
+            System.out.println("marca " + marca);
+
+            marca = optional.get();
+            marca.setNome(marca.getNome());
+            System.out.println("marcaSet " + marca);
+
+            return ResponseEntity.ok(new MarcaMapper(marca));
         }
         
         return ResponseEntity.notFound().build();

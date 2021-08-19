@@ -71,6 +71,8 @@ class MarcaControllerTest {
     @Test
     void deveResponderCreatedELocationQuandoCadastrarMarca() {
         Marca nova = new Marca("Ferrari");
+        MarcaForm novaDto = new MarcaForm();
+        novaDto.setNome(nova.getNome());
 
         when(marcaRepository.save(nova))
             .then(invocation -> {
@@ -80,7 +82,7 @@ class MarcaControllerTest {
                 return marcaSalva;
             });
 
-        ResponseEntity<Marca> resposta = marcaController.cadastra(nova, uriBuilder);
+        ResponseEntity<MarcaMapper> resposta = marcaController.cadastra(novaDto, uriBuilder);
         assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
         assertEquals("http://localhost:8080/marcas/1", resposta.getHeaders().getLocation().toString());
     }
@@ -88,14 +90,16 @@ class MarcaControllerTest {
     @Test
     void deveAlterarNomeQuandoMarcaExistir() {
         Marca audi = new Marca(1L, "Audi");
+        MarcaForm audiDto = new MarcaForm();
+        audiDto.setNome("NOVA Audi");
 
         when(marcaRepository.findById(1L))
             .thenReturn(Optional.of(audi));
 
-        ResponseEntity<Marca> resposta = marcaController.altera(1L, new Marca(1L, "NOVA Audi"));
+        ResponseEntity<MarcaMapper> resposta = marcaController.altera(1L, audiDto);
         assertEquals(HttpStatus.OK, resposta.getStatusCode());
 
-        Marca marcaAlterada = resposta.getBody();
+        MarcaMapper marcaAlterada = resposta.getBody();
         assertEquals("NOVA Audi", marcaAlterada.getNome());
     }
 
@@ -104,7 +108,10 @@ class MarcaControllerTest {
         when(marcaRepository.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
-        ResponseEntity<Marca> resposta = marcaController.altera(1L, new Marca(1L, "NOVA Audi"));
+        MarcaForm audiDto = new MarcaForm();
+        audiDto.setNome("NOVA Audi");
+
+        ResponseEntity<MarcaMapper> resposta = marcaController.altera(1L, audiDto);
         assertEquals(HttpStatus.NOT_FOUND, resposta.getStatusCode());
     }
 
