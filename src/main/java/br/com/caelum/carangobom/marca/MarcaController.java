@@ -17,15 +17,15 @@ import java.util.Optional;
 public class MarcaController {
 
     private MarcaRepository marcaRepository;
-
-    @Autowired
-    public MarcaController(MarcaRepository marcaRepository) {
-        this.marcaRepository = marcaRepository;
-    }
+	
+	@Autowired
+	public MarcaController(MarcaRepository marcaRepository) {
+		this.marcaRepository = marcaRepository;
+	}
 
     @GetMapping
     public List<Marca> lista() {
-        return marcaRepository.findAllByOrderByNome();
+    	return marcaRepository.findAllByOrderByNome();
     }
 
     @GetMapping("/{id}")

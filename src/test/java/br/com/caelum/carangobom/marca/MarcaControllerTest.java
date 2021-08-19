@@ -43,7 +43,7 @@ class MarcaControllerTest {
         when(marcaRepository.findAllByOrderByNome())
             .thenReturn(marcas);
 
-        List<Marca> resultado = marcaController.lista();
+        List<Marca> resultado = marcaController.lista(); 
         assertEquals(marcas, resultado);
     }
 

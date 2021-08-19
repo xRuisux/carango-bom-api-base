@@ -1,9 +1,10 @@
 package br.com.caelum.carangobom.marca;
 
-import lombok.Data;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 
-@Data
 @AllArgsConstructor
 public class MarcaMapper {
     private String nome;
@@ -13,4 +14,24 @@ public class MarcaMapper {
         this.nome = marca.getNome();
         this.id = marca.getId();
     }
+    
+	public static List<MarcaMapper> converter(List<Marca> marcas) {
+		return marcas.stream().map(MarcaMapper::new).collect(Collectors.toList());
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
