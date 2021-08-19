@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import br.com.caelum.carangobom.Usuario.Usuario;
-import br.com.caelum.carangobom.Usuario.UsuarioRepository;
+import br.com.caelum.carangobom.usuario.Usuario;
+import br.com.caelum.carangobom.usuario.UsuarioRepository;
 
 @Service
 public class AutenticacaoService implements UserDetailsService {

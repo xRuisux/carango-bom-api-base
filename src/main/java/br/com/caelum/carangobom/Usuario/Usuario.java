@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.Usuario;
+package br.com.caelum.carangobom.usuario;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,7 +14,7 @@ import javax.persistence.ManyToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import br.com.caelum.carangobom.Perfil.Perfil;
+import br.com.caelum.carangobom.perfil.Perfil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

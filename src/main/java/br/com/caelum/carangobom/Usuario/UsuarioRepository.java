@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.Usuario;
+package br.com.caelum.carangobom.usuario;
 
 import java.util.Optional;
 

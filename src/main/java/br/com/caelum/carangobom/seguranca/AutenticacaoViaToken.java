@@ -1,6 +1,7 @@
 package br.com.caelum.carangobom.seguranca;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -11,8 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import br.com.caelum.carangobom.Usuario.Usuario;
-import br.com.caelum.carangobom.Usuario.UsuarioRepository;
+import br.com.caelum.carangobom.usuario.Usuario;
+import br.com.caelum.carangobom.usuario.UsuarioRepository;
 
 public class AutenticacaoViaToken extends OncePerRequestFilter {
     private TokenService tokenService;
@@ -25,8 +26,8 @@ public class AutenticacaoViaToken extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException  {
- 
+            throws ServletException, IOException {
+
         String token = recuperarToken(request);
         boolean valido = tokenService.isTokenValido(token);
         if (valido) {
@@ -38,10 +39,14 @@ public class AutenticacaoViaToken extends OncePerRequestFilter {
 
     private void autenticarCliente(String token) {
         Long idUsuario = tokenService.getIdUsuario(token);
-        Usuario usuario = repository.findById(idUsuario).get();
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null,
-                usuario.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Optional<Usuario> optionalUsuario = repository.findById(idUsuario);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                usuario, null,usuario.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
     }
 
     private String recuperarToken(HttpServletRequest request) {
