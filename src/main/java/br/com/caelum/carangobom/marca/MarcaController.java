@@ -12,7 +12,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
+@RequestMapping("/marcas")
 public class MarcaController {
 
     private MarcaRepository mr;
@@ -22,15 +23,13 @@ public class MarcaController {
         this.mr = mr;
     }
 
-    @GetMapping("/marcas")
-    @ResponseBody
+    @GetMapping
     @Transactional
     public List<Marca> lista() {
         return mr.findAllByOrderByNome();
     }
 
-    @GetMapping("/marcas/{id}")
-    @ResponseBody
+    @GetMapping("/{id}")
     @Transactional
     public ResponseEntity<Marca> id(@PathVariable Long id) {
         Optional<Marca> m1 = mr.findById(id);
@@ -39,10 +38,11 @@ public class MarcaController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    @PostMapping
+    @Transactional
     }
 
-    @PostMapping("/marcas")
-    @ResponseBody
+    @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<Marca> cadastra(@Valid @RequestBody Marca m1, UriComponentsBuilder uriBuilder) {
         Marca m2 = mr.save(m1);
@@ -64,8 +64,7 @@ public class MarcaController {
         }
     }
 
-    @DeleteMapping("/marcas/{id}")
-    @ResponseBody
+    @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Marca> deleta(@PathVariable Long id) {
         Optional<Marca> m1 = mr.findById(id);
