@@ -24,13 +24,11 @@ public class MarcaController {
     }
 
     @GetMapping
-    @Transactional
     public List<Marca> lista() {
         return marcaRepository.findAllByOrderByNome();
     }
 
     @GetMapping("/{id}")
-    @Transactional
     public ResponseEntity<Marca> id(@PathVariable Long id) {
         Optional<Marca> marca = marcaRepository.findById(id);
         if (marca.isPresent()) {
