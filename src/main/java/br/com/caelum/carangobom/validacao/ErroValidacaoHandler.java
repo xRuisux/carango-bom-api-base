@@ -25,11 +25,11 @@ public class ErroValidacaoHandler {
 		List<ErroDeParametroOutputDto> erroDto = new ArrayList<>();
 		List<FieldError> errosFormulario = exception.getBindingResult().getFieldErrors();
 		
-		errosFormulario.forEach(e -> {
-			String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-			ErroDeParametroOutputDto erro = new ErroDeParametroOutputDto(e.getField(), mensagem);
-			erroDto.add(erro);
-		});
+//		errosFormulario.forEach(e -> {
+//			String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
+//			ErroDeParametroOutputDto erro = new ErroDeParametroOutputDto(e.getField(), mensagem);
+//			erroDto.add(erro);
+//		});
 		
 		return erroDto;
 	}

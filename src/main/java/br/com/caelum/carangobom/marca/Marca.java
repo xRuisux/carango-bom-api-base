@@ -10,6 +10,8 @@ import lombok.Data;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.Map;
+
 @Data
 @Entity
 public class Marca {
@@ -32,4 +34,21 @@ public class Marca {
         this.id = id;
         this.nome = nome;
     }
+
+	public String getNome() {
+		return this.nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 }
