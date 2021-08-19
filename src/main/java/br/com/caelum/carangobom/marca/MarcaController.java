@@ -2,7 +2,6 @@ package br.com.caelum.carangobom.marca;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -53,10 +52,9 @@ public class MarcaController {
         Optional<Marca> optional = marcaRepository.findById(id);
 
         if (optional.isPresent()) {
-            Marca marcaConvertido = marcaDto.convertToMarca();
-            Marca marca = new Marca();
+            Marca marcaConvertido = marcaDto.convertToMarca();            
+            Marca marca = optional.get();
             
-            marca = optional.get();
             marca.setNome(marcaConvertido.getNome());
 
             return ResponseEntity.ok(new MarcaMapper(marca));
