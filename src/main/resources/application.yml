@@ -13,3 +13,8 @@ cors:
     all-methods: true
     all-headers: true
     send-credentials: true
+
+carangobom:
+  jwt:
+    expiration: 86400000
+    secret: my-secret
