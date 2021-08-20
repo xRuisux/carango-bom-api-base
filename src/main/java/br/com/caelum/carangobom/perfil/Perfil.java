@@ -12,8 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@AllArgsConstructor
+
 @NoArgsConstructor
 public class Perfil implements GrantedAuthority {
     private static final long serialVersionUID = 1L;

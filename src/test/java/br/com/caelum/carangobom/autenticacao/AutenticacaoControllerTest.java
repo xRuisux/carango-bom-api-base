@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -57,7 +56,51 @@ public class AutenticacaoControllerTest {
             .content(json))
             .andExpect(status().isBadRequest());
     }
+    @Test
+    void deverRetornar400quandoUsuarioNaoInformarSenha() throws Exception {
 
+        String url = "/autenticacao";
+
+        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "12345");
+        Gson gson = new Gson();
+        String json = gson.toJson(form);
+    
+        this.mockMvc.perform(
+            post(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest());
+    }
+    @Test
+    void deverRetornar400quandoInformarFomatodeEmailInvalido() throws Exception {
+
+        String url = "/autenticacao";
+
+        AutenticacaoForm form = new AutenticacaoForm("admin", "12345");
+        Gson gson = new Gson();
+        String json = gson.toJson(form);
+    
+        this.mockMvc.perform(
+            post(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest());
+    }
+    @Test
+    void deverRetornar400quandoInformarEmailInvalido() throws Exception {
+
+        String url = "/autenticacao";
+
+        AutenticacaoForm form = new AutenticacaoForm("admin@gmail.com", "");
+        Gson gson = new Gson();
+        String json = gson.toJson(form);
+    
+        this.mockMvc.perform(
+            post(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest());
+    }
     @Test
     void deverRetornar400quandoUsuarioInformaEmailInvalida() throws Exception {
 
