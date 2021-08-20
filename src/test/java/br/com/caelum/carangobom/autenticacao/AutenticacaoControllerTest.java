@@ -43,7 +43,7 @@ public class AutenticacaoControllerTest {
     }
 
     @Test
-    void deverRetornar400quandoUsuarioComSenhaOuemailEstaoIncorretos() throws Exception {
+    void deverRetornar400quandoUsuarioInformaSenhaInvalida() throws Exception {
 
         String url = "/autenticacao";
 
@@ -58,7 +58,21 @@ public class AutenticacaoControllerTest {
             .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void deverRetornar400quandoUsuarioInformaEmailInvalida() throws Exception {
 
+        String url = "/autenticacao";
+
+        AutenticacaoForm form = new AutenticacaoForm("admin@email.co", "12345");
+        Gson gson = new Gson();
+        String json = gson.toJson(form);
+    
+        this.mockMvc.perform(
+            post(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest());
+    }
     @Test
     void deverRetornar403quandoTentarUsarEndpointSemTokenDeAcesso() throws Exception {
         String url = "/marcas";
