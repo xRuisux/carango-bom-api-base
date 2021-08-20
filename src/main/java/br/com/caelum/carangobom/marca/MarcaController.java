@@ -2,7 +2,6 @@ package br.com.caelum.carangobom.marca;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -12,69 +11,68 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
+@RequestMapping("/marcas")
 public class MarcaController {
 
-    private MarcaRepository mr;
+    private MarcaRepository marcaRepository;
+	
+	@Autowired
+	public MarcaController(MarcaRepository marcaRepository) {
+		this.marcaRepository = marcaRepository;
+	}
 
-    @Autowired
-    public MarcaController(MarcaRepository mr) {
-        this.mr = mr;
-    }
-
-    @GetMapping("/marcas")
-    @ResponseBody
-    @Transactional
+    @GetMapping
     public List<Marca> lista() {
-        return mr.findAllByOrderByNome();
+    	return marcaRepository.findAllByOrderByNome();
     }
 
-    @GetMapping("/marcas/{id}")
-    @ResponseBody
-    @Transactional
+    @GetMapping("/{id}")
     public ResponseEntity<Marca> id(@PathVariable Long id) {
-        Optional<Marca> m1 = mr.findById(id);
-        if (m1.isPresent()) {
-            return ResponseEntity.ok(m1.get());
-        } else {
-            return ResponseEntity.notFound().build();
+        Optional<Marca> marca = marcaRepository.findById(id);
+        if (marca.isPresent()) {
+            return ResponseEntity.ok(marca.get());
         }
+            
+        return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/marcas")
-    @ResponseBody
+    @PostMapping
     @Transactional
-    public ResponseEntity<Marca> cadastra(@Valid @RequestBody Marca m1, UriComponentsBuilder uriBuilder) {
-        Marca m2 = mr.save(m1);
-        URI h = uriBuilder.path("/marcas/{id}").buildAndExpand(m1.getId()).toUri();
-        return ResponseEntity.created(h).body(m2);
+    public ResponseEntity<MarcaMapper> cadastra(@Valid @RequestBody MarcaForm marcaDto, UriComponentsBuilder uriBuilder) {
+        Marca marca = marcaDto.convertToMarca();
+        marca = marcaRepository.save(marca);
+        URI location = uriBuilder.path("/marcas/{id}").buildAndExpand(marca.getId()).toUri();
+        return ResponseEntity.created(location).body(new MarcaMapper(marca));
     }
 
-    @PutMapping("/marcas/{id}")
-    @ResponseBody
+    @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Marca> altera(@PathVariable Long id, @Valid @RequestBody Marca m1) {
-        Optional<Marca> m2 = mr.findById(id);
-        if (m2.isPresent()) {
-            Marca m3 = m2.get();
-            m3.setNome(m1.getNome());
-            return ResponseEntity.ok(m3);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<MarcaMapper> altera(@PathVariable Long id, @Valid @RequestBody MarcaForm marcaDto) {
+        Optional<Marca> optional = marcaRepository.findById(id);
+
+        if (optional.isPresent()) {
+            Marca marcaConvertido = marcaDto.convertToMarca();            
+            Marca marca = optional.get();
+            
+            marca.setNome(marcaConvertido.getNome());
+
+            return ResponseEntity.ok(new MarcaMapper(marca));
         }
+        
+        return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/marcas/{id}")
-    @ResponseBody
+    @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Marca> deleta(@PathVariable Long id) {
-        Optional<Marca> m1 = mr.findById(id);
-        if (m1.isPresent()) {
-            Marca m2 = m1.get();
-            mr.delete(m2);
-            return ResponseEntity.ok(m2);
-        } else {
-            return ResponseEntity.notFound().build();
+        Optional<Marca> optional = marcaRepository.findById(id);
+        if (optional.isPresent()) {
+            Marca marca = optional.get();
+            marcaRepository.delete(marca);
+            return ResponseEntity.ok(marca);
         }
+
+        return ResponseEntity.notFound().build();
     }
 }
