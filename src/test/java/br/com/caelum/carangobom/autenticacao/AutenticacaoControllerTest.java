@@ -46,7 +46,7 @@ public class AutenticacaoControllerTest {
 
         String url = "/autenticacao";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "12345");
+        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "123457");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
