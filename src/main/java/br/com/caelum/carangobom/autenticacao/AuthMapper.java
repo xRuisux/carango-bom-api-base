@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class AutenticacaoDto {
+public class AuthMapper {
     private String token;
     private String tipo;
 

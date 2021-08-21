@@ -14,17 +14,17 @@ import lombok.NoArgsConstructor;
 @Entity
 
 @NoArgsConstructor
-public class Perfil implements GrantedAuthority {
+public class Profile implements GrantedAuthority {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    private String name;
 
     @Override
     public String getAuthority() {
-        return nome;
+        return name;
     }
 }

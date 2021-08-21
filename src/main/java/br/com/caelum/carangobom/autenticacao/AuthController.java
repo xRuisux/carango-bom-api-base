@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.caelum.carangobom.seguranca.TokenService;
 
 @RestController
-@RequestMapping("/autenticacao")
-public class AutenticacaoController {
+@RequestMapping("/auth")
+public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -25,12 +25,12 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<AutenticacaoDto> autenticar(@RequestBody @Valid AutenticacaoForm form) {
+    public ResponseEntity<AuthMapper> autenticar(@RequestBody @Valid AuthForm form) {
 
-        UsernamePasswordAuthenticationToken dadosLogin = form.converter();
+        UsernamePasswordAuthenticationToken dadosLogin = form.convert();
         Authentication authentication = authenticationManager.authenticate(dadosLogin);
-        String token = tokenService.gerarToken(authentication);
-        return ResponseEntity.ok(new AutenticacaoDto(token, "Bearer"));
+        String token = tokenService.generate(authentication);
+        return ResponseEntity.ok(new AuthMapper(token, "Bearer"));
     }
 }
         

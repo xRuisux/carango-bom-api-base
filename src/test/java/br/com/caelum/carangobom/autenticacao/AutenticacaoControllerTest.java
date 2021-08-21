@@ -28,9 +28,9 @@ public class AutenticacaoControllerTest {
     @Test
     void deverRetornar200quandoUsuarioComSenhaEemailEstaoCorretos() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "123456");
+        AuthForm form = new AuthForm("admin@email.com", "123456");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -44,9 +44,9 @@ public class AutenticacaoControllerTest {
     @Test
     void deverRetornar400quandoUsuarioInformaSenhaInvalida() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "123457");
+        AuthForm form = new AuthForm("admin@email.com", "123457");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -59,9 +59,9 @@ public class AutenticacaoControllerTest {
     @Test
     void deverRetornar400quandoUsuarioNaoInformarSenha() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "12345");
+        AuthForm form = new AuthForm("admin@email.com", "12345");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -74,9 +74,9 @@ public class AutenticacaoControllerTest {
     @Test
     void deverRetornar400quandoInformarFomatodeEmailInvalido() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin", "12345");
+        AuthForm form = new AuthForm("admin", "12345");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -89,9 +89,9 @@ public class AutenticacaoControllerTest {
     @Test
     void deverRetornar400quandoInformarEmailInvalido() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@gmail.com", "");
+        AuthForm form = new AuthForm("admin@gmail.com", "");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -104,9 +104,9 @@ public class AutenticacaoControllerTest {
     @Test
     void deverRetornar400quandoUsuarioInformaEmailInvalida() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.co", "12345");
+        AuthForm form = new AuthForm("admin@email.co", "12345");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     

@@ -19,15 +19,15 @@ public class TokenService {
     @Value("${carangobom.jwt.secret}")
     private String secret;
 
-    public String gerarToken(Authentication authentication) {
-        Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
-        Date hoje = new Date();
-        Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
-        return Jwts.builder().setIssuer("API Carangobom").setSubject(usuarioLogado.getId().toString()).setIssuedAt(hoje)
-                .setExpiration(dataExpiracao).signWith(SignatureAlgorithm.HS256, secret).compact();
+    public String generate(Authentication authentication) {
+        Usuario loggedUser = (Usuario) authentication.getPrincipal();
+        Date today = new Date();
+        Date expirationDate = new Date(today.getTime() + Long.parseLong(expiration));
+        return Jwts.builder().setIssuer("API Carangobom").setSubject(loggedUser.getId().toString()).setIssuedAt(today)
+                .setExpiration(expirationDate).signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 
-    public boolean isTokenValido(String token) {
+    public boolean check(String token) {
         try {
             Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
             return true;
@@ -36,7 +36,7 @@ public class TokenService {
         }
     }
 
-    public Long getIdUsuario(String token) {
+    public Long getIdUser(String token) {
         Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
         return Long.parseLong(claims.getSubject());
     }

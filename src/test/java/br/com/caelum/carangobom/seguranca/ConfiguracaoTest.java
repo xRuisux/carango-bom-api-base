@@ -14,8 +14,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import br.com.caelum.carangobom.autenticacao.AutenticacaoDto;
-import br.com.caelum.carangobom.autenticacao.AutenticacaoForm;
+import br.com.caelum.carangobom.autenticacao.AutenticacaoMapper;
+import br.com.caelum.carangobom.autenticacao.AuthForm;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,9 +38,9 @@ public class ConfiguracaoTest {
     }
     @Test
     void deverRetornar200quandoTentarUsarEndpointComTokenDeAcessoValido() throws Exception {
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "123456");
+        AuthForm form = new AuthForm("admin@email.com", "123456");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -51,7 +51,7 @@ public class ConfiguracaoTest {
             .andExpect(status().isOk())
             .andReturn();
         String responseBody = resultado.getResponse().getContentAsString();
-        AutenticacaoDto autenticacaoDto = new Gson().fromJson(responseBody, AutenticacaoDto.class);
+        AutenticacaoMapper autenticacaoDto = new Gson().fromJson(responseBody, AutenticacaoMapper.class);
         url = "/marcas";
         this.mockMvc.perform(get(url).header("Authorization", autenticacaoDto.getTipo()+  " " +  autenticacaoDto.getToken())).andExpect(status().isOk());
     }
