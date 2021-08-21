@@ -14,7 +14,7 @@ import javax.persistence.ManyToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import br.com.caelum.carangobom.perfil.Perfil;
+import br.com.caelum.carangobom.perfil.Profile;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,7 +30,7 @@ public class User implements UserDetails {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Perfil> perfis = new ArrayList<>();
+    private List<Profile> perfis = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

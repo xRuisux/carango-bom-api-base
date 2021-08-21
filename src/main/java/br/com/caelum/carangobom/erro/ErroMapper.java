@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ErroDto {
+public class ErroMapper {
     private String erro;
     private String hint;
 
