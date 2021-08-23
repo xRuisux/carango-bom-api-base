@@ -32,4 +32,8 @@ public class Marca {
         this.id = id;
         this.nome = nome;
     }
+    
+    public String getNome() {
+    	return this.nome;
+    }
 }
