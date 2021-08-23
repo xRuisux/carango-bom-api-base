@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import br.com.caelum.carangobom.security.TokenService;
 import br.com.caelum.carangobom.user.User;
 import br.com.caelum.carangobom.user.UserService;
+import javassist.NotFoundException;
 
 public class AuthViaToken extends OncePerRequestFilter {
     private TokenService tokenService;
@@ -31,22 +32,24 @@ public class AuthViaToken extends OncePerRequestFilter {
         String token = getTokenFromRequest(request);
         boolean isValid = tokenService.check(token);
         if (isValid) {
-            authenticate(token);
+            try {
+                authenticate(token);
+            } catch (Exception e) {
+                isValid = false;
+            }
         }
 
         filterChain.doFilter(request, response);
     }
 
-    private void authenticate(String token) {
+    private void authenticate(String token) throws NotFoundException{
         Long userId = tokenService.getUserId(token);
-        try {
-           User user =  usersService.findById(userId);
-           UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                user, null,user.getAuthorities()
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (Exception e) {
-        }
+
+        User user =  usersService.findById(userId);
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+            user, null,user.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {
