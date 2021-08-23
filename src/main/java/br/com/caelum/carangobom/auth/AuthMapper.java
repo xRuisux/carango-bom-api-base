@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.autenticacao;
+package br.com.caelum.carangobom.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.autenticacao;
+package br.com.caelum.carangobom.auth;
 
 import javax.transaction.Transactional;
 
@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureTestEntityManager
 @Transactional
-public class AutenticacaoControllerTest {
+public class AuthControllerTest {
     @Autowired
     private MockMvc mockMvc;
 

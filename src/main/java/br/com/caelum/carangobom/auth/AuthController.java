@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.autenticacao;
+package br.com.caelum.carangobom.auth;
 
 import javax.validation.Valid;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.caelum.carangobom.seguranca.TokenService;
+import br.com.caelum.carangobom.security.TokenService;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,7 +25,7 @@ public class AuthController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<AuthMapper> autenticar(@RequestBody @Valid AuthForm form) {
+    public ResponseEntity<AuthMapper> autenticate(@RequestBody @Valid AuthForm form) {
 
         UsernamePasswordAuthenticationToken dadosLogin = form.convert();
         Authentication authentication = authenticationManager.authenticate(dadosLogin);

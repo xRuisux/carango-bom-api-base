@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.autenticacao;
+package br.com.caelum.carangobom.auth;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;

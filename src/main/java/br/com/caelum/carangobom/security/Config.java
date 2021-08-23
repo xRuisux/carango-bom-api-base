@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.seguranca;
+package br.com.caelum.carangobom.security;
 
 import java.util.List;
 
@@ -16,27 +16,28 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
-import br.com.caelum.carangobom.autenticacao.AuthViaToken;
-import br.com.caelum.carangobom.autenticacao.AuthService;
-import br.com.caelum.carangobom.usuario.UserRepository;
+import br.com.caelum.carangobom.auth.AuthService;
+import br.com.caelum.carangobom.auth.AuthViaToken;
+import br.com.caelum.carangobom.users.UsersService;
+
+
 
 @EnableWebSecurity
 @Configuration
 public class Config extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private AuthService autenticacaoService;
+    private AuthService authService;
 
     @Autowired
     private TokenService tokenService;
 
     @Autowired
-    private UserRepository usuarioRepository;
+    private UsersService usersService;
 
-    // Configuracoes de autenticacao
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(authService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
@@ -58,7 +59,7 @@ public class Config extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/veiculos/*").permitAll().antMatchers(HttpMethod.POST, "/auth")
                 .permitAll().anyRequest().authenticated().and().csrf().disable().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .addFilterBefore(new AuthViaToken(tokenService, usuarioRepository),
+                .addFilterBefore(new AuthViaToken(tokenService, usersService),
                         UsernamePasswordAuthenticationFilter.class);
     }
 

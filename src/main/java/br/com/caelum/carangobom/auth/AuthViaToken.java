@@ -1,7 +1,6 @@
-package br.com.caelum.carangobom.autenticacao;
+package br.com.caelum.carangobom.auth;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -12,24 +11,24 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import br.com.caelum.carangobom.seguranca.TokenService;
-import br.com.caelum.carangobom.usuario.User;
-import br.com.caelum.carangobom.usuario.UserRepository;
+import br.com.caelum.carangobom.security.TokenService;
+import br.com.caelum.carangobom.users.UsersService;
+import br.com.caelum.carangobom.users.Users;
 
 public class AuthViaToken extends OncePerRequestFilter {
     private TokenService tokenService;
-    private UserRepository repository;
+    private UsersService usersService;
 
-    public AuthViaToken(TokenService tokenService, UserRepository repository) {
+    public AuthViaToken(TokenService tokenService, UsersService usersService) {
         this.tokenService = tokenService;
-        this.repository = repository;
+        this.usersService = usersService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String token = recuperarToken(request);
+        String token = getToken(request);
         boolean isValid = tokenService.check(token);
         if (isValid) {
             authenticateUser(token);
@@ -40,17 +39,18 @@ public class AuthViaToken extends OncePerRequestFilter {
 
     private void authenticateUser(String token) {
         Long idUser = tokenService.getIdUser(token);
-        Optional<User> optionalUser = repository.findById(idUser);
-        if (optionalUser.isPresent()) {
-            User usuario = optionalUser.get();
+        try {
+            Users user = this.usersService.findById(idUser);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                usuario, null,usuario.getAuthorities()
+                user, null,user.getAuthorities()
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        } catch (Exception e) {
+            //TODO: handle exception
         }
     }
 
-    private String recuperarToken(HttpServletRequest request) {
+    private String getToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
             return null;

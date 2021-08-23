@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.usuario;
+package br.com.caelum.carangobom.users;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,13 +14,13 @@ import javax.persistence.ManyToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import br.com.caelum.carangobom.perfil.Profile;
+import br.com.caelum.carangobom.profile.Profile;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-public class User implements UserDetails {
+public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -30,11 +30,11 @@ public class User implements UserDetails {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Profile> perfis = new ArrayList<>();
+    private List<Profile> profiles = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.perfis;
+        return this.profiles;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.seguranca;
+package br.com.caelum.carangobom.security;
 
 import java.util.Date;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import br.com.caelum.carangobom.usuario.User;
+import br.com.caelum.carangobom.users.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,7 +20,7 @@ public class TokenService {
     private String secret;
 
     public String generate(Authentication authentication) {
-        User loggedUser = (User) authentication.getPrincipal();
+        Users loggedUser = (Users) authentication.getPrincipal();
         Date today = new Date();
         Date expirationDate = new Date(today.getTime() + Long.parseLong(expiration));
         return Jwts.builder().setIssuer("API Carangobom").setSubject(loggedUser.getId().toString()).setIssuedAt(today)

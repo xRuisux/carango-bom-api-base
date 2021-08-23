@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.perfil;
+package br.com.caelum.carangobom.profile;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
