@@ -3,6 +3,7 @@ package br.com.caelum.carangobom.security;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -32,6 +33,9 @@ public class Config extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserService usersService;
+    
+    @Value("${cors.allowed.origins}")
+    private String allowedOrigin;
 
     // Configuracoes de auth
     @Override
@@ -49,8 +53,8 @@ public class Config extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(request -> {
             var cors = new CorsConfiguration();
-            cors.setAllowedOrigins(List.of("http://localhost:3000"));
-            cors.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE","PATCH", "OPTIONS"));
+            cors.setAllowedOrigins(List.of(allowedOrigin));
+            cors.setAllowedMethods(List.of("*"));
             cors.setAllowedHeaders(List.of("*"));
             return cors;
           }).and()
