@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.seguranca;
+package br.com.caelum.carangobom.security;
 
 import java.util.List;
 
@@ -16,25 +16,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
-import br.com.caelum.carangobom.usuario.UsuarioRepository;
+import br.com.caelum.carangobom.auth.AuthService;
+import br.com.caelum.carangobom.auth.AuthViaToken;
+import br.com.caelum.carangobom.user.UserService;
 
 @EnableWebSecurity
 @Configuration
-public class Configuracao extends WebSecurityConfigurerAdapter {
+public class Config extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private AutenticacaoService autenticacaoService;
+    private AuthService authService;
 
     @Autowired
     private TokenService tokenService;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserService usersService;
 
-    // Configuracoes de autenticacao
+    // Configuracoes de auth
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(authService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
@@ -53,10 +55,10 @@ public class Configuracao extends WebSecurityConfigurerAdapter {
             return cors;
           }).and()
         .authorizeRequests().antMatchers(HttpMethod.GET, "/veiculos").permitAll()
-                .antMatchers(HttpMethod.GET, "/veiculos/*").permitAll().antMatchers(HttpMethod.POST, "/autenticacao")
+                .antMatchers(HttpMethod.GET, "/veiculos/*").permitAll().antMatchers(HttpMethod.POST, "/auth")
                 .permitAll().anyRequest().authenticated().and().csrf().disable().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .addFilterBefore(new AutenticacaoViaToken(tokenService, usuarioRepository),
+                .addFilterBefore(new AuthViaToken(tokenService, usersService),
                         UsernamePasswordAuthenticationFilter.class);
     }
 

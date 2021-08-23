@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.autenticacao;
+package br.com.caelum.carangobom.auth;
 
 import javax.transaction.Transactional;
 
@@ -21,16 +21,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureTestEntityManager
 @Transactional
-public class AutenticacaoControllerTest {
+public class AuthControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void deverRetornar200quandoUsuarioComSenhaEemailEstaoCorretos() throws Exception {
+    void shouldReturn200WhenUserSendCorrectEmailAndPassword() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "123456");
+        AuthForm form = new AuthForm("admin@email.com", "123456");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -42,11 +42,11 @@ public class AutenticacaoControllerTest {
     }
 
     @Test
-    void deverRetornar400quandoUsuarioInformaSenhaInvalida() throws Exception {
+    void shouldReturn400WhenPassowrdIsIncorrect() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "123457");
+        AuthForm form = new AuthForm("admin@email.com", "123457");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -57,11 +57,11 @@ public class AutenticacaoControllerTest {
             .andExpect(status().isBadRequest());
     }
     @Test
-    void deverRetornar400quandoUsuarioNaoInformarSenha() throws Exception {
+    void shouldReturn400WhenPasswordFieldIsLowerThan6Characteres() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "12345");
+        AuthForm form = new AuthForm("admin@email.com", "12345");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -72,11 +72,11 @@ public class AutenticacaoControllerTest {
             .andExpect(status().isBadRequest());
     }
     @Test
-    void deverRetornar400quandoInformarFomatodeEmailInvalido() throws Exception {
+    void shouldReturn400WhenEmailFormatIsInvalid() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin", "12345");
+        AuthForm form = new AuthForm("admin", "12345");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -87,11 +87,11 @@ public class AutenticacaoControllerTest {
             .andExpect(status().isBadRequest());
     }
     @Test
-    void deverRetornar400quandoInformarEmailInvalido() throws Exception {
+    void shouldReturn400WhenPasswordFieldIsBlank() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@gmail.com", "");
+        AuthForm form = new AuthForm("admin@gmail.com", "");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -102,11 +102,11 @@ public class AutenticacaoControllerTest {
             .andExpect(status().isBadRequest());
     }
     @Test
-    void deverRetornar400quandoUsuarioInformaEmailInvalida() throws Exception {
+    void shouldReturn400WhenEmailNotExists() throws Exception {
 
-        String url = "/autenticacao";
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.co", "12345");
+        AuthForm form = new AuthForm("admin@email.co", "12345");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -117,7 +117,7 @@ public class AutenticacaoControllerTest {
             .andExpect(status().isBadRequest());
     }
     @Test
-    void deverRetornar403quandoTentarUsarEndpointSemTokenDeAcesso() throws Exception {
+    void shouldReturn403WhenTentarUsarEndpointSemTokenDeAcesso() throws Exception {
         String url = "/marcas";
         this.mockMvc.perform(get(url)).andExpect(status().isForbidden());
     }

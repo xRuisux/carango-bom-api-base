@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.seguranca;
+package br.com.caelum.carangobom.security;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+
+
 @SpringBootTest
 @TestPropertySource(properties = {"carangobom.jwt.secret: my-secret"})
 public class TokenServiceTest {
@@ -14,8 +16,8 @@ public class TokenServiceTest {
     TokenService tokenService;
 
     @Test
-    void deverRetornarFalseQuandoTokenInvalidoePassado() throws Exception {
-        String tokeninvalido = "eyJhbGciOiJIUzI1NiJ9.";
-        assertEquals(false, tokenService.isTokenValido(tokeninvalido));
+    void shouldFailIfTokenIsInvalid() throws Exception {
+        String invalidToken = "eyJhbGciOiJIUzI1NiJ9.";
+        assertEquals(false, tokenService.check(invalidToken));
     }
 }

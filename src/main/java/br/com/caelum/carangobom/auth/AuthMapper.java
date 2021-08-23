@@ -1,12 +1,12 @@
-package br.com.caelum.carangobom.autenticacao;
+package br.com.caelum.carangobom.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class AutenticacaoDto {
+public class AuthMapper {
     private String token;
-    private String tipo;
+    private String type;
 
 }
