@@ -35,7 +35,7 @@ public class AuthViaToken extends OncePerRequestFilter {
             try {
                 authenticate(token);
             } catch (Exception e) {
-                isValid = false;
+                throw new ServletException("Token Inválido");
             }
         }
 
