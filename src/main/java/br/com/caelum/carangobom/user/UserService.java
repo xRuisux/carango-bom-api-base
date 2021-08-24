@@ -1,5 +1,6 @@
 package br.com.caelum.carangobom.user;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,9 @@ public class UserService {
             throw new NotFoundException("Usuário não encontrado");
         }
         return user.get();
+    }
+
+    public List<User> findAllByOrderById()  {
+        return this.repository.findAllByOrderById();
     }
 }
