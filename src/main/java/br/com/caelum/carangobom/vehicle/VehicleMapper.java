@@ -3,7 +3,7 @@ package br.com.caelum.carangobom.vehicle;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class VehicleDto {
+public class VehicleMapper {
 	
 	private Long id;
 	private String brandName;
@@ -11,12 +11,12 @@ public class VehicleDto {
 	private Integer year;
 	private String model;
 	
-	public VehicleDto(Vehicle veiculo) {
-		this.id = veiculo.getId();
-		this.year = veiculo.getYear();
-		this.brandName = veiculo.getBrand().getNome();
-		this.price = veiculo.getPrice();
-		this.model = veiculo.getModel();
+	public VehicleMapper(Vehicle vehicle) {
+		this.id = vehicle.getId();
+		this.year = vehicle.getYear();
+		this.brandName = vehicle.getBrand().getNome();
+		this.price = vehicle.getPrice();
+		this.model = vehicle.getModel();
 	}
 	
 	public Long getId() {
@@ -59,7 +59,7 @@ public class VehicleDto {
 		this.model = model;
 	}
 
-	public List<VehicleDto> converter(List<Vehicle> veiculos) {
-		return veiculos.stream().map(VehicleDto::new).collect(Collectors.toList());
+	public List<VehicleMapper> converter(List<Vehicle> vehicles) {
+		return vehicles.stream().map(VehicleMapper::new).collect(Collectors.toList());
 	}
 }

@@ -30,20 +30,20 @@ public class VehicleController {
 	private MarcaRepository marcaRepository;
 
 	@PostMapping
-	public ResponseEntity<VehicleDto> register(@RequestBody @Valid VehicleForm form, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<VehicleMapper> register(@RequestBody @Valid VehicleForm form, UriComponentsBuilder uriBuilder) {
 		Vehicle vehicle = form.convert(marcaRepository);
 					
 		vehicleRepository.save(vehicle);
 		
 		URI uri = uriBuilder.path("/vehicle/{id}").buildAndExpand(vehicle.getId()).toUri();
-		return ResponseEntity.created(uri).body(new VehicleDto(vehicle));
+		return ResponseEntity.created(uri).body(new VehicleMapper(vehicle));
 	}
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<VehicleDto> update(@PathVariable Long id, @RequestBody @Valid VehicleForm form) {
+	public ResponseEntity<VehicleMapper> update(@PathVariable Long id, @RequestBody @Valid VehicleForm form) {
 		Vehicle vehicle = form.update(id, vehicleRepository, marcaRepository);
 		
-		return ResponseEntity.ok(new VehicleDto(vehicle));
+		return ResponseEntity.ok(new VehicleMapper(vehicle));
 	}
 }
