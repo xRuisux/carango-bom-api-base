@@ -22,27 +22,22 @@ import br.com.caelum.carangobom.marca.MarcaRepository;
 @RestController
 @RequestMapping("/vehicle")
 public class VehicleController {
-
-	@Autowired
-	private VehicleRepository vehicleRepository;
 	
 	@Autowired
-	private MarcaRepository marcaRepository;
+	VehicleService vehicleService;
 
 	@PostMapping
 	public ResponseEntity<VehicleMapper> register(@RequestBody @Valid VehicleForm form, UriComponentsBuilder uriBuilder) {
-		Vehicle vehicle = form.convert(marcaRepository);
-					
-		vehicleRepository.save(vehicle);
-		
+		Vehicle vehicle = vehicleService.create(form);
 		URI uri = uriBuilder.path("/vehicle/{id}").buildAndExpand(vehicle.getId()).toUri();
+		
 		return ResponseEntity.created(uri).body(new VehicleMapper(vehicle));
 	}
 	
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<VehicleMapper> update(@PathVariable Long id, @RequestBody @Valid VehicleForm form) {
-		Vehicle vehicle = form.update(id, vehicleRepository, marcaRepository);
+		Vehicle vehicle = vehicleService.update(id, form);
 		
 		return ResponseEntity.ok(new VehicleMapper(vehicle));
 	}

@@ -53,16 +53,12 @@ public class VehicleForm {
 		this.price = price;
 	}
 
-	public Vehicle convert(MarcaRepository marcaRepository) {
-		Marca brand = marcaRepository.getOne(brandId);
+	public Vehicle convert(Marca brand) {
 	
 		return new Vehicle(price, year, model, brand);
 	}
 	
-	public Vehicle update(Long id, VehicleRepository vehicleRepository, MarcaRepository marcaRepository) {
-		Marca brand = marcaRepository.getOne(brandId);
-		
-		Vehicle vehicle = vehicleRepository.getOne(id);
+	public Vehicle update(Vehicle vehicle, Marca brand) {
 		
 		vehicle.setBrand(brand);
 		vehicle.setYear(year);

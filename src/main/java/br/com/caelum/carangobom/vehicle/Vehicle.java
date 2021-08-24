@@ -24,7 +24,6 @@ public class Vehicle {
 	}
 
 	public Vehicle(Integer price, Integer year, String model, Marca brand) {
-		super();
 		this.price = price;
 		this.year = year;
 		this.model = model;
