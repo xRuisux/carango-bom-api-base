@@ -21,13 +21,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-@SpringBootTest
+/*@SpringBootTest
 @TestPropertySource(properties = {"DB_NAME=carangobom","spring.jpa.hibernate.ddlAuto:update"})
 @AutoConfigureMockMvc
 @AutoConfigureTestEntityManager
-@Transactional
+@Transactional*/
 public class ConfigTest {
-    @Autowired
+    /*@Autowired
     private MockMvc mockMvc;
 
    
@@ -54,5 +54,5 @@ public class ConfigTest {
         AuthMapper authMapper = new Gson().fromJson(responseBody, AuthMapper.class);
         url = "/marcas";
         this.mockMvc.perform(get(url).header("Authorization", authMapper.getType()+  " " +  authMapper.getToken())).andExpect(status().isOk());
-    }
+    }*/
 }
