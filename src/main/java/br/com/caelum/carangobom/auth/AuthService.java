@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.caelum.carangobom.user.UserService;
 
+
 @Service
 public class AuthService implements UserDetailsService {
 

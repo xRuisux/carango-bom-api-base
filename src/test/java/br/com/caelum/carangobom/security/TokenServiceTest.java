@@ -8,9 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 
-
 @SpringBootTest
-@TestPropertySource(properties = {"carangobom.jwt.secret: my-secret"})
+@TestPropertySource("test")
 public class TokenServiceTest {
     @Autowired
     TokenService tokenService;
