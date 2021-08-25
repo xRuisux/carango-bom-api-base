@@ -1,5 +1,7 @@
 package br.com.caelum.carangobom.user;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserMapper {
     private Long id;
@@ -11,5 +13,9 @@ public class UserMapper {
         this.name = user.getName();
         this.email = user.getEmail();
     }
+
+    public static List<UserMapper> usersListConverters(List<User> users) {
+		return users.stream().map(UserMapper::new).collect(Collectors.toList());
+	}
 
 }

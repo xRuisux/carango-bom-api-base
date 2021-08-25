@@ -11,7 +11,7 @@ public class AuthenticationExceptionHandler {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AuthenticationException.class)
-    public ErrorMapper erroAutenticaoHandler(AuthenticationException exception) {
+    public ErrorMapper authenticationExceptionHandler(AuthenticationException exception) {
         return new ErrorMapper("Autenticação Inválida", "Verifique se o e-mail e senha foram informados corretamente");
     }
 }

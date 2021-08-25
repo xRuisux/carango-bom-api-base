@@ -10,28 +10,33 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEnti
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-/*@SpringBootTest
-@TestPropertySource(properties = {"DB_NAME=carangobom","spring.jpa.hibernate.ddlAuto:update"})
+@SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @AutoConfigureTestEntityManager
-@Transactional*/
-public class AuthControllerTest {
-    /*@Autowired
+@Transactional
+class AuthControllerTest {
+    @Autowired
     private MockMvc mockMvc;
-
+    private String url = "/auth";
     @Test
-    void shouldReturn200WhenUserSendCorrectEmailAndPassword() throws Exception {
+    void authenticaticationTests() throws Exception {
+        this.shouldReturn200WhenUserSendCorrectEmailAndPassword("admin@email.com", "123456");
+        this.shouldReturn400WhenPassowrdIsIncorrect("admin@email.com", "123457");
+        this.shouldReturn400WhenPasswordFieldIsLowerThan6Characteres("admin@email.com", "12345");
+        this.shouldReturn400WhenEmailFormatIsInvalid("admin","12345");
+        this.shouldReturn400WhenEmailNotExists("admin@email.co","123456");
 
-        String url = "/auth";
+    }
+    void shouldReturn200WhenUserSendCorrectEmailAndPassword(String email, String password) throws Exception {
 
-        AuthForm form = new AuthForm("admin@email.com", "123456");
+        AuthForm form = new AuthForm(email, password);
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -42,12 +47,10 @@ public class AuthControllerTest {
             .andExpect(status().isOk());
     }
 
-    @Test
-    void shouldReturn400WhenPassowrdIsIncorrect() throws Exception {
+    
+    void shouldReturn400WhenPassowrdIsIncorrect(String email, String password) throws Exception {
 
-        String url = "/auth";
-
-        AuthForm form = new AuthForm("admin@email.com", "123457");
+        AuthForm form = new AuthForm(email, password);
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -57,12 +60,10 @@ public class AuthControllerTest {
             .content(json))
             .andExpect(status().isBadRequest());
     }
-    @Test
-    void shouldReturn400WhenPasswordFieldIsLowerThan6Characteres() throws Exception {
+    
+    void shouldReturn400WhenPasswordFieldIsLowerThan6Characteres(String email, String password) throws Exception {
 
-        String url = "/auth";
-
-        AuthForm form = new AuthForm("admin@email.com", "12345");
+        AuthForm form = new AuthForm(email, password);
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -72,12 +73,10 @@ public class AuthControllerTest {
             .content(json))
             .andExpect(status().isBadRequest());
     }
-    @Test
-    void shouldReturn400WhenEmailFormatIsInvalid() throws Exception {
+    
+    void shouldReturn400WhenEmailFormatIsInvalid(String email, String password) throws Exception {
 
-        String url = "/auth";
-
-        AuthForm form = new AuthForm("admin", "12345");
+        AuthForm form = new AuthForm(email, password );
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -87,12 +86,10 @@ public class AuthControllerTest {
             .content(json))
             .andExpect(status().isBadRequest());
     }
-    @Test
-    void shouldReturn400WhenPasswordFieldIsBlank() throws Exception {
+    
+    void shouldReturn400WhenPasswordFieldIsBlank(String email, String password) throws Exception {
 
-        String url = "/auth";
-
-        AuthForm form = new AuthForm("admin@gmail.com", "");
+        AuthForm form = new AuthForm(email, password);
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -102,12 +99,10 @@ public class AuthControllerTest {
             .content(json))
             .andExpect(status().isBadRequest());
     }
-    @Test
-    void shouldReturn400WhenEmailNotExists() throws Exception {
+    
+    void shouldReturn400WhenEmailNotExists(String email, String password) throws Exception {
 
-        String url = "/auth";
-
-        AuthForm form = new AuthForm("admin@email.co", "12345");
+        AuthForm form = new AuthForm(email, password);
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -119,7 +114,6 @@ public class AuthControllerTest {
     }
     @Test
     void shouldReturn403WhenTentarUsarEndpointSemTokenDeAcesso() throws Exception {
-        String url = "/marcas";
-        this.mockMvc.perform(get(url)).andExpect(status().isForbidden());
-    }*/
+        this.mockMvc.perform(get("/marcas")).andExpect(status().isForbidden());
+    }
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javassist.NotFoundException;
 
@@ -31,5 +32,12 @@ public class UserService {
 
     public List<User> findAllByOrderById()  {
         return this.repository.findAllByOrderById();
+    }
+
+    @Transactional
+    public User deleteById(Long id) throws NotFoundException{
+        User user = this.findById(id);
+        this.repository.delete(user);
+        return user;
     }
 }

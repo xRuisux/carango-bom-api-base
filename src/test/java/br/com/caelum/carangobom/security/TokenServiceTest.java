@@ -5,19 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ActiveProfiles;
 
-
-
-/*@SpringBootTest
-@TestPropertySource(properties = {"carangobom.jwt.secret: my-secret"})*/
-public class TokenServiceTest {
-   /* @Autowired
+@SpringBootTest
+@ActiveProfiles("test")
+class TokenServiceTest {
+    @Autowired
     TokenService tokenService;
 
     @Test
-    void shouldFailIfTokenIsInvalid() throws Exception {
+    void shouldFailIfTokenIsInvalid() {
         String invalidToken = "eyJhbGciOiJIUzI1NiJ9.";
         assertEquals(false, tokenService.check(invalidToken));
-    }*/
+    }
 }
