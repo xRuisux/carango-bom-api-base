@@ -5,12 +5,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import br.com.caelum.carangobom.marca.Brand;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -28,6 +26,20 @@ class VehicleForm {
 		@NotNull @Min(1000)
 		private Integer price;
 
+		public VehicleForm(Long brandId, String model, Integer year, Integer price) {
+			this.brandId = brandId;
+			this.model = model;
+			this.year = year;
+			this.price = price;
+		}
+
+		public VehicleForm(Vehicle vehicle) {
+			this.brandId = vehicle.getBrand().getId();
+			this.model = vehicle.getModel();
+			this.year = vehicle.getYear();
+			this.price = vehicle.getPrice();
+		}
+		
 		public Vehicle convert(Brand brand) {
 		
 			return new Vehicle(price, year, model, brand);

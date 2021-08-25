@@ -8,13 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import br.com.caelum.carangobom.marca.Brand;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 public class Vehicle {
 	
@@ -25,11 +19,43 @@ public class Vehicle {
 	private String model;
 	@ManyToOne
 	private Brand brand;
-	
+
 	public Vehicle(Integer price, Integer year, String model, Brand brand) {
+		super();
 		this.price = price;
 		this.year = year;
 		this.model = model;
+		this.brand = brand;
+	}
+
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Integer getPrice() {
+		return price;
+	}
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+	public Integer getYear() {
+		return year;
+	}
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+	public String getModel() {
+		return model;
+	}
+	public void setModel(String model) {
+		this.model = model;
+	}
+	public Brand getBrand() {
+		return brand;
+	}
+	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}
 }

@@ -21,11 +21,11 @@ class VehicleService {
 	private BrandService brandService;
 
   public Vehicle create(VehicleForm form) throws NotFoundException {
-
+      System.out.println("ENTROU VEHICLE SERVICE ");
       Brand brand = getBrandFromId(form.getBrandId());
-      
+      System.out.println("ENTROU VEHICLE SERVICE 2");
       Vehicle vehicle = form.convert(brand);
-            
+      System.out.println("ENTROU VEHICLE SERVICE 3");
       vehicleRepository.save(vehicle);
       return vehicle;
   }
