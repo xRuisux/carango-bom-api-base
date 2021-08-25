@@ -6,30 +6,43 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import lombok.Data;
-
 import static javax.persistence.GenerationType.IDENTITY;
 
-@Data
 @Entity
-public class Marca {
+public class Brand {
 
     @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Size(min = 2, message = "Deve ter {min} ou mais caracteres.")
-    private String nome;
+    private String name;
 
-    public Marca() {
+    public Brand() {
 
     }
 
-    public Marca(String nome) {
-        this(null, nome);
+    public Brand(String name) {
+        this(null, name);
     }
 
-    public Marca(Long id, String nome) {
+    public Brand(Long id, String name) {
         this.id = id;
-        this.nome = nome;
+        this.name = name;
     }
+
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

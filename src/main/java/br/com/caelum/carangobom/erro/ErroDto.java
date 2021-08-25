@@ -9,4 +9,7 @@ public class ErroDto {
     private String erro;
     private String hint;
 
+    public ErroDto(String erro) {
+        this.erro = erro;
+    }
 }
