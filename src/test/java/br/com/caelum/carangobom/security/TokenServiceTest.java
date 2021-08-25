@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class TokenServiceTest {
+class TokenServiceTest {
     @Autowired
     TokenService tokenService;
 

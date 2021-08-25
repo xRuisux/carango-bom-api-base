@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureTestEntityManager
 @Transactional
-public class ConfigTest {
+class ConfigTest {
     @Autowired
     private MockMvc mockMvc;
 

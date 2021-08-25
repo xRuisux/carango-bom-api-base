@@ -1,6 +1,7 @@
 package br.com.caelum.carangobom.user;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.<GrantedAuthority>emptyList();
     }
 
     @Override
