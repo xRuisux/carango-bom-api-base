@@ -14,8 +14,8 @@ class TokenServiceTest {
     @Autowired
     TokenService tokenService;
 
-     @Test
-     void shouldFailIfTokenIsInvalid() {
+    @Test
+    void shouldFailIfTokenIsInvalid() {
         String invalidToken = "eyJhbGciOiJIUzI1NiJ9.";
         assertEquals(false, tokenService.check(invalidToken));
     }

@@ -56,4 +56,12 @@ class ConfigTest {
         url = "/marcas";
         this.mockMvc.perform(get(url).header("Authorization", authMapper.getType()+  " " +  authMapper.getToken())).andExpect(status().isOk());
     }
+
+    @Test
+    void shouldReturnFailIfSendingTokenWithoutType() throws Exception {
+
+        String url = "/marcas";
+        AuthMapper authMapper = new AuthMapper("","" );
+        this.mockMvc.perform(get(url).header("Authorization", authMapper.getToken())).andExpect(status().isForbidden());
+    }
 }

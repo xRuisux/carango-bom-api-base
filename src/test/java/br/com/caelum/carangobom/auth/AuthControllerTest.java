@@ -31,7 +31,7 @@ class AuthControllerTest {
         this.shouldReturn400WhenPassowrdIsIncorrect("admin@email.com", "123457");
         this.shouldReturn400WhenPasswordFieldIsLowerThan6Characteres("admin@email.com", "12345");
         this.shouldReturn400WhenEmailFormatIsInvalid("admin","12345");
-        this.shouldReturn400WhenEmailNotExists("admin@email.co","12345");
+        this.shouldReturn400WhenEmailNotExists("admin@email.co","123456");
 
     }
     void shouldReturn200WhenUserSendCorrectEmailAndPassword(String email, String password) throws Exception {
