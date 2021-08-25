@@ -9,4 +9,7 @@ public class ErrorMapper {
     private String error;
     private String hint;
 
+    public ErroDto(String erro) {
+        this.erro = erro;
+    }
 }
