@@ -1,12 +1,12 @@
-package br.com.caelum.carangobom.erro;
+package br.com.caelum.carangobom.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ErroDto {
-    private String erro;
+public class ErrorMapper {
+    private String error;
     private String hint;
 
     public ErroDto(String erro) {

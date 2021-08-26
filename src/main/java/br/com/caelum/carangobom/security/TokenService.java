@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.seguranca;
+package br.com.caelum.carangobom.security;
 
 import java.util.Date;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import br.com.caelum.carangobom.usuario.Usuario;
+import br.com.caelum.carangobom.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,15 +19,15 @@ public class TokenService {
     @Value("${carangobom.jwt.secret}")
     private String secret;
 
-    public String gerarToken(Authentication authentication) {
-        Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
-        Date hoje = new Date();
-        Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
-        return Jwts.builder().setIssuer("API Carangobom").setSubject(usuarioLogado.getId().toString()).setIssuedAt(hoje)
-                .setExpiration(dataExpiracao).signWith(SignatureAlgorithm.HS256, secret).compact();
+    public String generate(Authentication authentication) {
+        User loggedUser = (User) authentication.getPrincipal();
+        Date today = new Date();
+        Date expirationDate = new Date(today.getTime() + Long.parseLong(expiration));
+        return Jwts.builder().setIssuer("API Carangobom").setSubject(loggedUser.getId().toString()).setIssuedAt(today)
+                .setExpiration(expirationDate).signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 
-    public boolean isTokenValido(String token) {
+    public boolean check(String token) {
         try {
             Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
             return true;
@@ -36,7 +36,7 @@ public class TokenService {
         }
     }
 
-    public Long getIdUsuario(String token) {
+    public Long getUserId(String token) {
         Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
         return Long.parseLong(claims.getSubject());
     }
