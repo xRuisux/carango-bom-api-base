@@ -38,17 +38,8 @@ public class BrandController {
 
     @PostMapping
     public ResponseEntity<BrandMapper> post(@Valid @RequestBody BrandForm brandDto, UriComponentsBuilder uriBuilder) throws Exception {
-        System.out.println(brandDto.getName());
-
         Brand brand = brandDto.convertToBrand();
-        System.out.println("----------- Brand " + brand.getName());
-        System.out.println("----------- Brand ID: " + brand.getId());
-
         brand = brandService.save(brand);
-
-        System.out.println("----------- Brand Saved" + brand);
-        // System.out.println("----------- Brand ID Saved: " + brand.getId());
-
         URI location = uriBuilder.path("/brand/{id}").buildAndExpand(brand.getId()).toUri();
         return ResponseEntity.created(location).body(new BrandMapper(brand));       
     }
