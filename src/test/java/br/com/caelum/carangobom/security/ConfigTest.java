@@ -53,7 +53,7 @@ class ConfigTest {
             .andReturn();
         String responseBody = result.getResponse().getContentAsString();
         AuthMapper authMapper = new Gson().fromJson(responseBody, AuthMapper.class);
-        url = "/marcas";
+        url = "/brand";
         this.mockMvc.perform(get(url).header("Authorization", authMapper.getType()+  " " +  authMapper.getToken())).andExpect(status().isOk());
     }
 }
