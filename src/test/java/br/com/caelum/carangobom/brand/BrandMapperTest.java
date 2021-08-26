@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.marca;
+package br.com.caelum.carangobom.brand;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import br.com.caelum.carangobom.brand.Brand;
+import br.com.caelum.carangobom.brand.BrandMapper;
 
 class BrandMapperTest {
 
