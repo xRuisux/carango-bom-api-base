@@ -1,6 +1,5 @@
 package br.com.caelum.carangobom.vehicle;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +28,13 @@ class VehicleService {
       return vehicle;
   }
 
-  public Vehicle update(Long id, VehicleForm form) throws NoSuchElementException, NotFoundException {
+  public Vehicle update(Long id, VehicleForm form) throws NotFoundException {
       
       Brand brand = getBrandFromId(form.getBrandId());
       
       Optional<Vehicle> vehicle = vehicleRepository.findById(id);
       if(!vehicle.isPresent()) {
-        throw new NoSuchElementException("Veículo não encontrado"); 
+        throw new NotFoundException("Veículo não encontrado"); 
       }
 
       Vehicle updatedVehicle = form.update(vehicle.get(), brand);

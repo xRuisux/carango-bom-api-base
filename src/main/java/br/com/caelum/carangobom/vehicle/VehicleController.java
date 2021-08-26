@@ -36,7 +36,7 @@ public class VehicleController {
 		
 		@PutMapping("/{id}")
 		@Transactional
-		public ResponseEntity<VehicleMapper> update(@PathVariable Long id, @RequestBody @Valid VehicleForm form)  throws NotFoundException {
+		public ResponseEntity<VehicleMapper> update(@PathVariable Long id, @RequestBody @Valid VehicleForm form) throws NotFoundException {
 				Vehicle vehicle = vehicleService.update(id, form);
 				
 				return ResponseEntity.ok(new VehicleMapper(vehicle));

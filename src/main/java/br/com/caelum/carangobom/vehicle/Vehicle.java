@@ -20,6 +20,8 @@ public class Vehicle {
 	@ManyToOne
 	private Brand brand;
 
+	public Vehicle() {}
+
 	public Vehicle(Integer price, Integer year, String model, Brand brand) {
 		super();
 		this.price = price;
