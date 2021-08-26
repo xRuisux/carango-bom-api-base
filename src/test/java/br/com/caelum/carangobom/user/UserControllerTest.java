@@ -15,7 +15,7 @@ import javassist.NotFoundException;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class UserControllerTest {
+class UserControllerTest {
 
     @Autowired
     UserController userController;

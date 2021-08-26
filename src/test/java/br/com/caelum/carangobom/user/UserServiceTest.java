@@ -14,7 +14,7 @@ import javassist.NotFoundException;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class UserServiceTest {
+class UserServiceTest {
     
     @Autowired
     private UserService userService;
