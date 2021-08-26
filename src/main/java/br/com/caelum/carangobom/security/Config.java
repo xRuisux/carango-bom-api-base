@@ -58,8 +58,8 @@ public class Config extends WebSecurityConfigurerAdapter {
             cors.setAllowedHeaders(List.of("*"));
             return cors;
           }).and()
-        .authorizeRequests().antMatchers(HttpMethod.GET, "/veiculos").permitAll()
-                .antMatchers(HttpMethod.GET, "/veiculos/*").permitAll().antMatchers(HttpMethod.POST, "/auth")
+        .authorizeRequests().antMatchers(HttpMethod.GET, "/vehicle").permitAll()
+                .antMatchers(HttpMethod.GET, "/vehicle/*").permitAll().antMatchers(HttpMethod.POST, "/auth")
                 .permitAll().anyRequest().authenticated().and().csrf().disable().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .addFilterBefore(new AuthViaToken(tokenService, usersService),
