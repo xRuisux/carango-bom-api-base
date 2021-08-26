@@ -12,6 +12,4 @@ public class ErrorMapper {
     public ErrorMapper(String error) {
         this.error = error;
     }
-
-    // public ErrorMapper(String error)
 }
