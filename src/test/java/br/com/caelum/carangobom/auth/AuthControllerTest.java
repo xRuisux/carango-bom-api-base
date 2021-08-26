@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.autenticacao;
+package br.com.caelum.carangobom.auth;
 
 import javax.transaction.Transactional;
 
@@ -10,27 +10,33 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEnti
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-/*@SpringBootTest
-@TestPropertySource(properties = {"DB_NAME=carangobom","spring.jpa.hibernate.ddlAuto:update"})
+@SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @AutoConfigureTestEntityManager
-@Transactional*/
-public class AutenticacaoControllerTest {
-    /*@Autowired
+@Transactional
+class AuthControllerTest {
+    @Autowired
     private MockMvc mockMvc;
-
+    private String url = "/auth";
     @Test
-    void deverRetornar200quandoUsuarioComSenhaEemailEstaoCorretos() throws Exception {
+    void authenticaticationTests() throws Exception {
+        this.shouldReturn200WhenUserSendCorrectEmailAndPassword("admin@email.com", "123456");
+        this.shouldReturn400WhenPassowrdIsIncorrect("admin@email.com", "123457");
+        this.shouldReturn400WhenPasswordFieldIsLowerThan6Characteres("admin@email.com", "12345");
+        this.shouldReturn400WhenEmailFormatIsInvalid("admin","12345");
+        this.shouldReturn400WhenEmailNotExists("admin@email.co","123456");
 
-        String url = "/autenticacao";
+    }
+    void shouldReturn200WhenUserSendCorrectEmailAndPassword(String email, String password) throws Exception {
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "123456");
+        AuthForm form = new AuthForm(email, password);
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -41,12 +47,62 @@ public class AutenticacaoControllerTest {
             .andExpect(status().isOk());
     }
 
-    @Test
-    void deverRetornar400quandoUsuarioInformaSenhaInvalida() throws Exception {
+    
+    void shouldReturn400WhenPassowrdIsIncorrect(String email, String password) throws Exception {
 
-        String url = "/autenticacao";
+        AuthForm form = new AuthForm(email, password);
+        Gson gson = new Gson();
+        String json = gson.toJson(form);
+    
+        this.mockMvc.perform(
+            post(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest());
+    }
+    
+    void shouldReturn400WhenPasswordFieldIsLowerThan6Characteres(String email, String password) throws Exception {
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "123457");
+        AuthForm form = new AuthForm(email, password);
+        Gson gson = new Gson();
+        String json = gson.toJson(form);
+    
+        this.mockMvc.perform(
+            post(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest());
+    }
+    
+    void shouldReturn400WhenEmailFormatIsInvalid(String email, String password) throws Exception {
+
+        AuthForm form = new AuthForm(email, password );
+        Gson gson = new Gson();
+        String json = gson.toJson(form);
+    
+        this.mockMvc.perform(
+            post(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest());
+    }
+    
+    void shouldReturn400WhenPasswordFieldIsBlank(String email, String password) throws Exception {
+
+        AuthForm form = new AuthForm(email, password);
+        Gson gson = new Gson();
+        String json = gson.toJson(form);
+    
+        this.mockMvc.perform(
+            post(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest());
+    }
+    
+    void shouldReturn400WhenEmailNotExists(String email, String password) throws Exception {
+
+        AuthForm form = new AuthForm(email, password);
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
@@ -57,68 +113,7 @@ public class AutenticacaoControllerTest {
             .andExpect(status().isBadRequest());
     }
     @Test
-    void deverRetornar400quandoUsuarioNaoInformarSenha() throws Exception {
-
-        String url = "/autenticacao";
-
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "12345");
-        Gson gson = new Gson();
-        String json = gson.toJson(form);
-    
-        this.mockMvc.perform(
-            post(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(json))
-            .andExpect(status().isBadRequest());
+    void shouldReturn403WhenTentarUsarEndpointSemTokenDeAcesso() throws Exception {
+        this.mockMvc.perform(get("/marcas")).andExpect(status().isForbidden());
     }
-    @Test
-    void deverRetornar400quandoInformarFomatodeEmailInvalido() throws Exception {
-
-        String url = "/autenticacao";
-
-        AutenticacaoForm form = new AutenticacaoForm("admin", "12345");
-        Gson gson = new Gson();
-        String json = gson.toJson(form);
-    
-        this.mockMvc.perform(
-            post(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(json))
-            .andExpect(status().isBadRequest());
-    }
-    @Test
-    void deverRetornar400quandoInformarEmailInvalido() throws Exception {
-
-        String url = "/autenticacao";
-
-        AutenticacaoForm form = new AutenticacaoForm("admin@gmail.com", "");
-        Gson gson = new Gson();
-        String json = gson.toJson(form);
-    
-        this.mockMvc.perform(
-            post(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(json))
-            .andExpect(status().isBadRequest());
-    }
-    @Test
-    void deverRetornar400quandoUsuarioInformaEmailInvalida() throws Exception {
-
-        String url = "/autenticacao";
-
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.co", "12345");
-        Gson gson = new Gson();
-        String json = gson.toJson(form);
-    
-        this.mockMvc.perform(
-            post(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(json))
-            .andExpect(status().isBadRequest());
-    }
-    @Test
-    void deverRetornar403quandoTentarUsarEndpointSemTokenDeAcesso() throws Exception {
-        String url = "/marcas";
-        this.mockMvc.perform(get(url)).andExpect(status().isForbidden());
-    }*/
 }

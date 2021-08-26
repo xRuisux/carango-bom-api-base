@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.seguranca;
+package br.com.caelum.carangobom.security;
 
 import javax.transaction.Transactional;
 
@@ -10,49 +10,51 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEnti
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import br.com.caelum.carangobom.autenticacao.AutenticacaoDto;
-import br.com.caelum.carangobom.autenticacao.AutenticacaoForm;
+import br.com.caelum.carangobom.auth.AuthForm;
+import br.com.caelum.carangobom.auth.AuthMapper;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-/*@SpringBootTest
-@TestPropertySource(properties = {"DB_NAME=carangobom","spring.jpa.hibernate.ddlAuto:update"})
+@SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @AutoConfigureTestEntityManager
-@Transactional*/
-public class ConfiguracaoTest {
-   /* @Autowired
+@Transactional
+class ConfigTest {
+    @Autowired
     private MockMvc mockMvc;
 
    
     @Test
-    void deverRetornar403quandoTentarUsarEndpointSemTokenDeAcesso() throws Exception {
+    void shouldReturn403WhenUsingEndpointWithoutAccessToken() throws Exception {
         String url = "/marcas";
         this.mockMvc.perform(get(url)).andExpect(status().isForbidden());
     }
     @Test
-    void deverRetornar200quandoTentarUsarEndpointComTokenDeAcessoValido() throws Exception {
-        String url = "/autenticacao";
+    void shouldReturn200WhenUsingEndpointValidAccessToken() throws Exception {
+        String url = "/auth";
 
-        AutenticacaoForm form = new AutenticacaoForm("admin@email.com", "123456");
+        AuthForm form = new AuthForm("admin@email.com", "123456");
         Gson gson = new Gson();
         String json = gson.toJson(form);
     
-        MvcResult resultado = this.mockMvc.perform(
+        MvcResult result = this.mockMvc.perform(
             post(url)
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
             .andExpect(status().isOk())
             .andReturn();
-        String responseBody = resultado.getResponse().getContentAsString();
-        AutenticacaoDto autenticacaoDto = new Gson().fromJson(responseBody, AutenticacaoDto.class);
+        String responseBody = result.getResponse().getContentAsString();
+        AuthMapper authMapper = new Gson().fromJson(responseBody, AuthMapper.class);
         url = "/marcas";
-        this.mockMvc.perform(get(url).header("Authorization", autenticacaoDto.getTipo()+  " " +  autenticacaoDto.getToken())).andExpect(status().isOk());
-    }*/
+        this.mockMvc.perform(get(url).header("Authorization", authMapper.getType()+  " " +  authMapper.getToken())).andExpect(status().isOk());
+    }
+
 }
