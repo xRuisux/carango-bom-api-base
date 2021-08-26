@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class MarcaMapperTest {
+class BrandMapperTest {
 
     @BeforeEach
     public void configuraMock() {
@@ -16,14 +16,14 @@ class MarcaMapperTest {
     }
     
 	@Test
-	void deveRetornarUmaListaDeMarcaMappers() {
-		List<Marca> listMarcas = List.of(
-				new Marca(1L, "BMW"),
-				new Marca(2L, "Fiat")
+	void deveRetornarUmaListaDeBrandMappers() {
+		List<Brand> listBrands = List.of(
+				new Brand(1L, "BMW"),
+				new Brand(2L, "Fiat")
 				);	
-		List<MarcaMapper> listMarcasMappers = MarcaMapper.converter(listMarcas);
+		List<BrandMapper> listBrandsMappers = BrandMapper.converter(listBrands);
 		
-		assertEquals(2, listMarcasMappers.size());
+		assertEquals(2, listBrandsMappers.size());
 	}
 
 }
