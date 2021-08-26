@@ -3,6 +3,9 @@ package br.com.caelum.carangobom.user;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.Getter;
+
+@Getter
 public class UserMapper {
     private Long id;
     private String name;

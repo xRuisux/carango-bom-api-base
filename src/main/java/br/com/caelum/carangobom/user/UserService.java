@@ -14,6 +14,9 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
     public User findByEmail(String email) throws NotFoundException {
         Optional<User> user = this.repository.findByEmail(email);
         if (!user.isPresent()) {
