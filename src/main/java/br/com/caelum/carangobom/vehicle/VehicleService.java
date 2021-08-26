@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.caelum.carangobom.marca.Brand;
-import br.com.caelum.carangobom.marca.BrandService;
+import br.com.caelum.carangobom.brand.Brand;
+import br.com.caelum.carangobom.brand.BrandService;
 import javassist.NotFoundException;
 
 @Service

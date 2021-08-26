@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.caelum.carangobom.marca.Brand;
+import br.com.caelum.carangobom.brand.Brand;
 import javassist.NotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

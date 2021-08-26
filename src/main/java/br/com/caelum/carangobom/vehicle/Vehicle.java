@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import br.com.caelum.carangobom.marca.Brand;
+import br.com.caelum.carangobom.brand.Brand;
 
 @Entity
 public class Vehicle {

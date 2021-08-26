@@ -4,7 +4,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import br.com.caelum.carangobom.marca.Brand;
+import br.com.caelum.carangobom.brand.Brand;
 import lombok.Getter;
 
 class VehicleForm {
