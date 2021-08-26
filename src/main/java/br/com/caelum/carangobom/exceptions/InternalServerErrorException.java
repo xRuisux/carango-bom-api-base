@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.erro;
+package br.com.caelum.carangobom.exceptions;
 
 public class InternalServerErrorException extends Exception{
     public InternalServerErrorException(String message) {

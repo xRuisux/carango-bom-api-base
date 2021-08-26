@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.caelum.carangobom.marca.Brand;
-import br.com.caelum.carangobom.marca.BrandRepository;
 import br.com.caelum.carangobom.marca.BrandService;
 import javassist.NotFoundException;
 
@@ -21,11 +20,11 @@ class VehicleService {
 	private BrandService brandService;
 
   public Vehicle create(VehicleForm form) throws NotFoundException {
-      System.out.println("ENTROU VEHICLE SERVICE ");
+    
       Brand brand = getBrandFromId(form.getBrandId());
-      System.out.println("ENTROU VEHICLE SERVICE 2");
+      
       Vehicle vehicle = form.convert(brand);
-      System.out.println("ENTROU VEHICLE SERVICE 3");
+      
       vehicleRepository.save(vehicle);
       return vehicle;
   }

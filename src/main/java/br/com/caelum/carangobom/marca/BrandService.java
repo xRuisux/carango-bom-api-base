@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.caelum.carangobom.erro.InternalServerErrorException;
+import br.com.caelum.carangobom.exceptions.InternalServerErrorException;
 import javassist.NotFoundException;
 
 import java.util.List;

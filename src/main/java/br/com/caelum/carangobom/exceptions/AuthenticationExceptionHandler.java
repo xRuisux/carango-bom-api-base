@@ -19,13 +19,13 @@ public class AuthenticationExceptionHandler {
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
-    public ErroDto erroNotFoundException(NotFoundException exception) {
-        return new ErroDto(exception.getMessage());
+    public ErrorMapper erroNotFoundException(NotFoundException exception) {
+        return new ErrorMapper(exception.getMessage());
     }
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(Exception.class)
-    public ErroDto erroException(Exception exception) {
-        return new ErroDto(exception.getMessage());
+    public ErrorMapper erroException(Exception exception) {
+        return new ErrorMapper(exception.getMessage());
     }
 }

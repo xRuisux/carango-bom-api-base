@@ -27,11 +27,10 @@ public class VehicleController {
 
 		@PostMapping
 		public ResponseEntity<VehicleMapper> register(@RequestBody @Valid VehicleForm form, UriComponentsBuilder uriBuilder) throws NotFoundException {
-			System.out.println("ENTROU VEHICLE CONTROLLER 1");
-			Vehicle vehicle = vehicleService.create(form);
-			System.out.println("ENTROU VEHICLE CONTROLLER 2");
+				Vehicle vehicle = vehicleService.create(form);
+			
 				URI uri = uriBuilder.path("/vehicle/{id}").buildAndExpand(vehicle.getId()).toUri();
-				System.out.println("ENTROU VEHICLE CONTROLLER 3");
+				
 				return ResponseEntity.created(uri).body(new VehicleMapper(vehicle));
 		}
 		
