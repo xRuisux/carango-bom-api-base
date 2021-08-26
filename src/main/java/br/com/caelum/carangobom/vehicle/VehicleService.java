@@ -37,8 +37,7 @@ class VehicleService {
         throw new NotFoundException("Veículo não encontrado"); 
       }
 
-      Vehicle updatedVehicle = form.update(vehicle.get(), brand);
-      return updatedVehicle;
+      return form.update(vehicle.get(), brand);
   }
 
     private Brand getBrandFromId(Long id) throws NotFoundException {
