@@ -8,9 +8,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import br.com.caelum.carangobom.brand.Brand;
-import br.com.caelum.carangobom.brand.BrandMapper;
-
 class BrandMapperTest {
 
     @BeforeEach
@@ -28,5 +25,4 @@ class BrandMapperTest {
 		
 		assertEquals(2, listBrandsMappers.size());
 	}
-
 }

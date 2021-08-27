@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.caelum.carangobom.exceptions.InternalServerErrorException;
 import javassist.NotFoundException;
 
 import javax.validation.Valid;
@@ -29,14 +30,14 @@ public class BrandController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BrandMapper> getById(@PathVariable Long id) throws NotFoundException, Exception {
+    public ResponseEntity<BrandMapper> getById(@PathVariable Long id) throws NotFoundException {
         Brand brand = brandService.findById(id);
         BrandMapper brandMapper = new BrandMapper(brand);
         return ResponseEntity.ok(brandMapper);
     }
 
     @PostMapping
-    public ResponseEntity<BrandMapper> post(@Valid @RequestBody BrandForm brandDto, UriComponentsBuilder uriBuilder) throws Exception {
+    public ResponseEntity<BrandMapper> post(@Valid @RequestBody BrandForm brandDto, UriComponentsBuilder uriBuilder) throws InternalServerErrorException {
         Brand brand = brandDto.convertToBrand();
         brand = brandService.save(brand);
         URI location = uriBuilder.path("/brand/{id}").buildAndExpand(brand.getId()).toUri();
@@ -44,13 +45,13 @@ public class BrandController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BrandMapper> put(@PathVariable Long id, @Valid @RequestBody BrandForm brandDto) throws NotFoundException, Exception {
+    public ResponseEntity<BrandMapper> put(@PathVariable Long id, @Valid @RequestBody BrandForm brandDto) throws NotFoundException {
         Brand brand = brandService.change(id, brandDto);
         return ResponseEntity.ok(new BrandMapper(brand));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<BrandMapper> delete(@PathVariable Long id) throws NotFoundException, Exception {
+    public ResponseEntity<BrandMapper> delete(@PathVariable Long id) throws NotFoundException {
         Brand brand = brandService.delete(id);
         return ResponseEntity.ok(new BrandMapper(brand));       
     }

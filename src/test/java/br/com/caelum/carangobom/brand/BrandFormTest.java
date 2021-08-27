@@ -13,12 +13,12 @@ class BrandFormTest {
         openMocks(this);    
     }
 	 
-	// @Test
-	// void deveConverterMarcaParaMarcaForm() {
-	// 	Brand brand = new Brand(1L, "BMW");
-	// 	BrandForm brandForm = new BrandForm("BMW");
-	// 	Brand brandConvertido = brandForm.convertToBrand();
+	@Test
+	void deveConverterMarcaParaMarcaForm() {
+		Brand brand = new Brand(1L, "BMW");
+		BrandForm brandForm = new BrandForm("BMW");
+		Brand brandConvertido = brandForm.convertToBrand();
 		
-	// 	assertEquals(brand.getName(), brandConvertido.getName());
-	// }
+		assertEquals(brand.getName(), brandConvertido.getName());
+	}
 }
