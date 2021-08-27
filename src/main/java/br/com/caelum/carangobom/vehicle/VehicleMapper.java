@@ -3,6 +3,9 @@ package br.com.caelum.carangobom.vehicle;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.Getter;
+
+@Getter
 public class VehicleMapper {
 	
 		private Long id;
