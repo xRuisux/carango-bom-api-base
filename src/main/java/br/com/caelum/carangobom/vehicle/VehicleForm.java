@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import br.com.caelum.carangobom.marca.Brand;
 import lombok.Getter;
 
+
 class VehicleForm {
 	
 		@NotNull

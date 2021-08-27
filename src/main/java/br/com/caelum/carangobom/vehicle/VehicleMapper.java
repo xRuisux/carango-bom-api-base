@@ -3,6 +3,9 @@ package br.com.caelum.carangobom.vehicle;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.Getter;
+
+@Getter
 public class VehicleMapper {
 	
 		private Long id;
@@ -12,14 +15,14 @@ public class VehicleMapper {
 		private String model;
 	
 		public VehicleMapper(Vehicle vehicle) {
-				this.id = vehicle.getId();
-				this.year = vehicle.getYear();
-				this.brandName = vehicle.getBrand().getName();
-				this.price = vehicle.getPrice();
-				this.model = vehicle.getModel();
+			this.id = vehicle.getId();
+			this.year = vehicle.getYear();
+			this.brandName = vehicle.getBrand().getName();
+			this.price = vehicle.getPrice();
+			this.model = vehicle.getModel();
 		}
 		
 		public static List<VehicleMapper> convert(List<Vehicle> vehicles) {
-				return vehicles.stream().map(VehicleMapper::new).collect(Collectors.toList());
+			return vehicles.stream().map(VehicleMapper::new).collect(Collectors.toList());
 		}
 }

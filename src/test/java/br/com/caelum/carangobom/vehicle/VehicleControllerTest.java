@@ -15,6 +15,8 @@ import javassist.NotFoundException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
+
 @SpringBootTest
 @ActiveProfiles("test")
 class VehicleControllerTest {
@@ -70,11 +72,12 @@ class VehicleControllerTest {
     void shouldReturnOkAfterVehicleUpdate() throws Exception {
         Brand brand = new Brand(1L, "Honda");
 
-        Vehicle vehicle = new Vehicle(800000, 2020, "CR-V", brand);
+        Vehicle vehicle = new Vehicle(900000, 2020, "CR-V", brand);
         VehicleForm form = new VehicleForm(vehicle);
 
         ResponseEntity<VehicleMapper> response = vehicleController.update(1L, form);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(900000, response.getBody().getPrice());
     }
 
     @Test
@@ -86,6 +89,28 @@ class VehicleControllerTest {
 
         assertThrows(NotFoundException.class, () -> {
             vehicleController.update(2L, form);
+        });
+    }
+
+    @Test
+    void shouldReturnAllUsers() throws Exception {
+
+        ResponseEntity<List<VehicleMapper>> response = vehicleController.list(); 
+        assertEquals(1, response.getBody().size());
+    }
+
+    @Test
+    void shouldDeleteUserWhenItExists() throws Exception {
+
+        ResponseEntity<VehicleMapper> response = vehicleController.delete(1l); 
+        assertEquals(1L, response.getBody().getId());
+        assertEquals(2020, response.getBody().getYear());
+        assertEquals(900000 , response.getBody().getPrice());
+        assertEquals("CR-V", response.getBody().getModel());
+
+
+        assertThrows(NotFoundException.class,  () -> {
+            vehicleController.delete(1L);
         });
     }
 }
