@@ -46,7 +46,7 @@ class VehicleControllerTest {
 
         
     @BeforeEach
-    public void configuraMock() {
+    public void prepareTest() {
         // openMocks(this);
         
         // vehicleService = new VehicleService();
@@ -93,7 +93,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void shouldReturnAllUsers() throws Exception {
+    void shouldReturnAllVehicles() throws Exception {
 
         ResponseEntity<List<VehicleMapper>> response = vehicleController.list(); 
         assertEquals(1, response.getBody().size());

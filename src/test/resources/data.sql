@@ -4,3 +4,5 @@ INSERT INTO tbl_user (name, email, password) VALUES('Admin', 'admin2@email.com',
 
 INSERT INTO brand (name) VALUES('Honda');
 
+
+

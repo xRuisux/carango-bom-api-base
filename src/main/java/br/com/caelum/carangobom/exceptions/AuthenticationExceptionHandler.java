@@ -23,9 +23,9 @@ public class AuthenticationExceptionHandler {
         return new ErrorMapper(exception.getMessage());
     }
 
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(Exception.class)
-    public ErrorMapper erroException(Exception exception) {
-        return new ErrorMapper(exception.getMessage());
-    }
+    // @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    // @ExceptionHandler(Exception.class)
+    // public ErrorMapper erroException(Exception exception) {
+    //     return new ErrorMapper(exception.getMessage());
+    // }
 }

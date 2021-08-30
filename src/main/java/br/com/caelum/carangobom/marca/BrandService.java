@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.caelum.carangobom.exceptions.InternalServerErrorException;
+import br.com.caelum.carangobom.report.IBrandReport;
 import javassist.NotFoundException;
 
 import java.util.List;
@@ -23,6 +24,10 @@ public class BrandService {
 
     public List<Brand> findAll() {
         return brandRepository.findAllByOrderByName();
+    }
+
+    public List<IBrandReport> getMyReport() {
+        return brandRepository.vehiclesByBrand();
     }
 
     public Brand findById(Long id) throws NotFoundException {
