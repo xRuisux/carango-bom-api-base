@@ -17,6 +17,8 @@ public class BrandService {
     @Autowired
     private BrandRepository brandRepository;
 
+    private static final String BRAND_NOT_FOUND_MESSAGE = "Marca não encontrada";
+
     @Autowired
 	public BrandService(BrandRepository brandRepository) {
 		this.brandRepository = brandRepository;
@@ -29,7 +31,7 @@ public class BrandService {
     public Brand findById(Long id) throws ResponseStatusException {
         Optional<Brand> brand  = brandRepository.findById(id);
         if (!brand.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Marca não encontrada");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, BRAND_NOT_FOUND_MESSAGE);
         }
         return brand.get();
     }
@@ -56,7 +58,7 @@ public class BrandService {
             brand.setName(brandConvertido.getName());
             return brand;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Marca não encontrada");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, BRAND_NOT_FOUND_MESSAGE);
     }
 
     @Transactional
@@ -67,6 +69,6 @@ public class BrandService {
             brandRepository.delete(brand);
             return brand;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Marca não encontrada");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, BRAND_NOT_FOUND_MESSAGE);
     }
 }
