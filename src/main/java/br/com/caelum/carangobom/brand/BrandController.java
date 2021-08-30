@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.server.ResponseStatusException;
 
 import br.com.caelum.carangobom.exceptions.InternalServerErrorException;
-import javassist.NotFoundException;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -30,7 +30,7 @@ public class BrandController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BrandMapper> getById(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<BrandMapper> getById(@PathVariable Long id) throws ResponseStatusException {
         Brand brand = brandService.findById(id);
         BrandMapper brandMapper = new BrandMapper(brand);
         return ResponseEntity.ok(brandMapper);
@@ -45,13 +45,13 @@ public class BrandController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BrandMapper> put(@PathVariable Long id, @Valid @RequestBody BrandForm brandDto) throws NotFoundException {
+    public ResponseEntity<BrandMapper> put(@PathVariable Long id, @Valid @RequestBody BrandForm brandDto) throws ResponseStatusException {
         Brand brand = brandService.change(id, brandDto);
         return ResponseEntity.ok(new BrandMapper(brand));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<BrandMapper> delete(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<BrandMapper> delete(@PathVariable Long id) throws ResponseStatusException {
         Brand brand = brandService.delete(id);
         return ResponseEntity.ok(new BrandMapper(brand));       
     }

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.caelum.carangobom.exceptions.InternalServerErrorException;
-import javassist.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +46,7 @@ public class BrandService {
     }
 
     @Transactional
-    public Brand change(Long id, BrandForm brandDto) throws NotFoundException {
+    public Brand change(Long id, BrandForm brandDto) throws ResponseStatusException {
         Optional<Brand> brandFound = brandRepository.findById(id);
         
         if(brandFound.isPresent()) {
@@ -61,7 +60,7 @@ public class BrandService {
     }
 
     @Transactional
-    public Brand delete(Long id) throws NotFoundException {
+    public Brand delete(Long id) throws ResponseStatusException {
         Optional<Brand> brandFound = brandRepository.findById(id);
         if (brandFound.isPresent()) {
             Brand brand = brandFound.get();
