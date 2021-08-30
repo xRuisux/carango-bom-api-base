@@ -3,6 +3,8 @@ package br.com.caelum.carangobom.brand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import br.com.caelum.carangobom.exceptions.InternalServerErrorException;
 import javassist.NotFoundException;
@@ -25,10 +27,10 @@ public class BrandService {
         return brandRepository.findAllByOrderByName();
     }
 
-    public Brand findById(Long id) throws NotFoundException {
+    public Brand findById(Long id) throws ResponseStatusException {
         Optional<Brand> brand  = brandRepository.findById(id);
         if (!brand.isPresent()) {
-            throw new NotFoundException("Marca não encontrada");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Marca não encontrada");
         }
         return brand.get();
     }
@@ -55,7 +57,7 @@ public class BrandService {
             brand.setName(brandConvertido.getName());
             return brand;
         }
-        throw new NotFoundException("Brand não encontrada.");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Marca não encontrada");
     }
 
     @Transactional
@@ -66,6 +68,6 @@ public class BrandService {
             brandRepository.delete(brand);
             return brand;
         }
-        throw new NotFoundException("Marca não pode ser excluída.");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Marca não encontrada");
     }
 }
