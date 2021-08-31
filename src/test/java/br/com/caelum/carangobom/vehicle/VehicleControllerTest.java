@@ -23,34 +23,12 @@ class VehicleControllerTest {
 
     @Autowired
     private VehicleController vehicleController;
-    
-    // @MockBean
-    // private VehicleService vehicleService;
-    
-    // @MockBean
-    // private BrandService brandService;
 
     private UriComponentsBuilder uriBuilder;
-    
-    // @Autowired
-    // BrandService brandService;
-
-    // @Mock
-    // VehicleService vehicleService;
-
-    // @Mock
-    // VehicleRepository vehicleRepository;
-
-    // @Mock
-    // BrandRepository brandRepository;
-
         
     @BeforeEach
     public void prepareTest() {
-        // openMocks(this);
-        
-        // vehicleService = new VehicleService();
-        // vehicleController = new VehicleController();
+
         uriBuilder = UriComponentsBuilder.fromUriString("http://localhost:8080");
 
     }
