@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.server.ResponseStatusException;
 
-import javassist.NotFoundException;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -56,8 +56,8 @@ class UserServiceTest {
     }
 
     @Test
-    void shouldReturnNotFoundExceptionWhenNotExists() throws Exception {
-        assertThrows(NotFoundException.class,  () -> {
+    void shouldReturnResponseStatusExceptionWhenNotExists() throws Exception {
+        assertThrows(ResponseStatusException.class,  () -> {
             userService.findById(4L);
         });
     }

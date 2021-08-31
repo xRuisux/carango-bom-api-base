@@ -1,12 +1,10 @@
-package br.com.caelum.carangobom.marca;
+package br.com.caelum.carangobom.brand;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javassist.NotFoundException;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -25,19 +23,19 @@ public class BrandController {
 	}
 
     @GetMapping
-    public List<Brand> lista() {
+    public List<Brand> get() {
     	return brandService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BrandMapper> id(@PathVariable Long id) throws NotFoundException, Exception {
+    public ResponseEntity<BrandMapper> getById(@PathVariable Long id) throws ResponseStatusException {
         Brand brand = brandService.findById(id);
         BrandMapper brandMapper = new BrandMapper(brand);
         return ResponseEntity.ok(brandMapper);
     }
 
     @PostMapping
-    public ResponseEntity<BrandMapper> cadastra(@Valid @RequestBody BrandForm brandDto, UriComponentsBuilder uriBuilder) throws Exception {
+    public ResponseEntity<BrandMapper> post(@Valid @RequestBody BrandForm brandDto, UriComponentsBuilder uriBuilder) throws ResponseStatusException {
         Brand brand = brandDto.convertToBrand();
         brand = brandService.save(brand);
         URI location = uriBuilder.path("/brand/{id}").buildAndExpand(brand.getId()).toUri();
@@ -45,13 +43,13 @@ public class BrandController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BrandMapper> altera(@PathVariable Long id, @Valid @RequestBody BrandForm brandDto) throws NotFoundException, Exception {
+    public ResponseEntity<BrandMapper> put(@PathVariable Long id, @Valid @RequestBody BrandForm brandDto) throws ResponseStatusException {
         Brand brand = brandService.change(id, brandDto);
         return ResponseEntity.ok(new BrandMapper(brand));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<BrandMapper> deleta(@PathVariable Long id) throws NotFoundException, Exception {
+    public ResponseEntity<BrandMapper> delete(@PathVariable Long id) throws ResponseStatusException {
         Brand brand = brandService.delete(id);
         return ResponseEntity.ok(new BrandMapper(brand));       
     }

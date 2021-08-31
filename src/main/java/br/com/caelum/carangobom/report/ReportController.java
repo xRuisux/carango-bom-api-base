@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.caelum.carangobom.marca.BrandService;
+import br.com.caelum.carangobom.brand.BrandService;
+
 
 @RestController
 @RequestMapping("/report")

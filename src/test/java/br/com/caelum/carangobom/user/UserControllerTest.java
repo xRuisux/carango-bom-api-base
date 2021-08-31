@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-
-import javassist.NotFoundException;
+import org.springframework.web.server.ResponseStatusException;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -41,7 +40,7 @@ class UserControllerTest {
         assertEquals(expectedUsersMappers.get(2).getId(), response.getBody().getId());
         assertEquals(expectedUsersMappers.get(2).getEmail(), response.getBody().getEmail());
         assertEquals(expectedUsersMappers.get(2).getName(), response.getBody().getName());
-        assertThrows(NotFoundException.class,  () -> {
+        assertThrows(ResponseStatusException.class,  () -> {
             userController.delete(3L);
         });
     }

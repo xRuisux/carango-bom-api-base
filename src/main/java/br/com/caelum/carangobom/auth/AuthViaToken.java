@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
 
 import br.com.caelum.carangobom.security.TokenService;
 import br.com.caelum.carangobom.user.User;
 import br.com.caelum.carangobom.user.UserService;
-import javassist.NotFoundException;
 
 public class AuthViaToken extends OncePerRequestFilter {
     private TokenService tokenService;
@@ -42,7 +42,7 @@ public class AuthViaToken extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void authenticate(String token) throws NotFoundException{
+    private void authenticate(String token) throws ResponseStatusException{
         Long userId = tokenService.getUserId(token);
 
         User user =  usersService.findById(userId);

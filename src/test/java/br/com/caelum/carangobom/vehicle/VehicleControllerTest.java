@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.server.ResponseStatusException;
 
-import br.com.caelum.carangobom.marca.Brand;
-import javassist.NotFoundException;
+import br.com.caelum.carangobom.brand.Brand;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -87,7 +87,7 @@ class VehicleControllerTest {
         Vehicle vehicle = new Vehicle(800000, 2020, "CR-V", brand);
         VehicleForm form = new VehicleForm(vehicle);
 
-        assertThrows(NotFoundException.class, () -> {
+        assertThrows(ResponseStatusException.class, () -> {
             vehicleController.update(2L, form);
         });
     }
@@ -109,7 +109,7 @@ class VehicleControllerTest {
         assertEquals("CR-V", response.getBody().getModel());
 
 
-        assertThrows(NotFoundException.class,  () -> {
+        assertThrows(ResponseStatusException.class,  () -> {
             vehicleController.delete(1L);
         });
     }

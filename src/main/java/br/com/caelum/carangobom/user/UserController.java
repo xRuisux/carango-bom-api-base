@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javassist.NotFoundException;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/user")
@@ -28,7 +27,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserMapper> delete(@PathVariable Long id) throws NotFoundException{
+    public ResponseEntity<UserMapper> delete(@PathVariable Long id) throws ResponseStatusException{
         
         User user = this.userService.deleteById(id);
         return ResponseEntity.ok(new UserMapper(user));

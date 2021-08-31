@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import br.com.caelum.carangobom.marca.Brand;
+import br.com.caelum.carangobom.brand.Brand;
 
 class VehicleMapperTest {
     

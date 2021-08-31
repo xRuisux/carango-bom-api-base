@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javassist.NotFoundException;
 
 
 @RestController
@@ -28,7 +27,7 @@ public class VehicleController {
 	VehicleService vehicleService;
 
 	@PostMapping
-	public ResponseEntity<VehicleMapper> register(@RequestBody @Valid VehicleForm form, UriComponentsBuilder uriBuilder) throws NotFoundException {
+	public ResponseEntity<VehicleMapper> register(@RequestBody @Valid VehicleForm form, UriComponentsBuilder uriBuilder) throws ResponseStatusException {
 		Vehicle vehicle = vehicleService.create(form);
 	
 		URI uri = uriBuilder.path("/vehicle/{id}").buildAndExpand(vehicle.getId()).toUri();
@@ -37,7 +36,7 @@ public class VehicleController {
 	}
 		
 	@PutMapping("/{id}")
-	public ResponseEntity<VehicleMapper> update(@PathVariable Long id, @RequestBody @Valid VehicleForm form) throws NotFoundException {
+	public ResponseEntity<VehicleMapper> update(@PathVariable Long id, @RequestBody @Valid VehicleForm form) throws ResponseStatusException {
 		Vehicle vehicle = vehicleService.update(id, form);
 		
 		return ResponseEntity.ok(new VehicleMapper(vehicle));
@@ -52,7 +51,7 @@ public class VehicleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<VehicleMapper> delete(@PathVariable Long id) throws NotFoundException{
+    public ResponseEntity<VehicleMapper> delete(@PathVariable Long id) throws ResponseStatusException{
         
         Vehicle vehicle = this.vehicleService.deleteById(id);
         return ResponseEntity.ok(new VehicleMapper(vehicle));
