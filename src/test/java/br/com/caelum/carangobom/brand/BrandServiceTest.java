@@ -80,9 +80,6 @@ class BrandServiceTest {
     @Test
     void MustCallDeleteFunction() throws Exception {
         Brand brandSaved = new Brand(1l, "Ferrari");
-        BrandForm novaDto = new BrandForm();
-        novaDto.setName("Audi");
-
         when(brandRepository.findById(anyLong()))
             .thenReturn(Optional.of(brandSaved));
         brandService.delete(1L);
