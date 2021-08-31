@@ -4,10 +4,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
-import br.com.caelum.carangobom.marca.Brand;
-import br.com.caelum.carangobom.marca.BrandService;
-import javassist.NotFoundException;
+import br.com.caelum.carangobom.brand.Brand;
+import br.com.caelum.carangobom.brand.BrandService;
 
 @Service
 class VehicleService {
@@ -18,7 +19,7 @@ class VehicleService {
 	@Autowired
 	private BrandService brandService;
 
-  public Vehicle create(VehicleForm form) throws NotFoundException {
+  public Vehicle create(VehicleForm form) throws ResponseStatusException {
     
       Brand brand = getBrandFromId(form.getBrandId());
       
@@ -28,19 +29,19 @@ class VehicleService {
       return vehicle;
   }
 
-  public Vehicle update(Long id, VehicleForm form) throws NotFoundException {
+  public Vehicle update(Long id, VehicleForm form) throws ResponseStatusException {
       
       Brand brand = getBrandFromId(form.getBrandId());
       
       Optional<Vehicle> vehicle = vehicleRepository.findById(id);
       if(!vehicle.isPresent()) {
-        throw new NotFoundException("Veículo não encontrado"); 
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado");
       }
 
       return form.update(vehicle.get(), brand);
   }
 
-    private Brand getBrandFromId(Long id) throws NotFoundException {
-        return brandService.findById(id);
-    }
+  private Brand getBrandFromId(Long id) throws ResponseStatusException {
+      return brandService.findById(id);
+  }
 }

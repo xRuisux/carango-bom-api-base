@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.marca;
+package br.com.caelum.carangobom.brand;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

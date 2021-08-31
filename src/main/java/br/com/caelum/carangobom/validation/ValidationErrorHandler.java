@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.validacao;
+package br.com.caelum.carangobom.validation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ErroValidacaoHandler {
+public class ValidationErrorHandler {
 
 	@Autowired
 	private MessageSource messageSource;
 	
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public List<ErroDeParametroOutputDto> erroHandler(MethodArgumentNotValidException exception) {
-		List<ErroDeParametroOutputDto> erroDto = new ArrayList<>();
+	public List<ParameterErrorOutputDto> erroHandler(MethodArgumentNotValidException exception) {
+		List<ParameterErrorOutputDto> erroDto = new ArrayList<>();
 		List<FieldError> errosFormulario = exception.getBindingResult().getFieldErrors();
 		
 		errosFormulario.forEach(e -> {
 			String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-			ErroDeParametroOutputDto erro = new ErroDeParametroOutputDto(e.getField(), mensagem);
+			ParameterErrorOutputDto erro = new ParameterErrorOutputDto(e.getField(), mensagem);
 			erroDto.add(erro);
 		});
 		
