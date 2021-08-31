@@ -8,7 +8,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.caelum.carangobom.report.IBrandReport;
 
-import java.io.Console;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +34,6 @@ public class BrandService {
 
     public Brand findById(Long id) throws ResponseStatusException {
         Optional<Brand> brand  = brandRepository.findById(id);
-        System.out.println(brand);
         if (!brand.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, BRAND_NOT_FOUND_MESSAGE);
         }
