@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import br.com.caelum.carangobom.brand.Brand;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
