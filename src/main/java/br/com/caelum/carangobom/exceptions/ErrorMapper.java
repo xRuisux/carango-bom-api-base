@@ -15,6 +15,4 @@ public class ErrorMapper {
         this.error = error;
         this.hint = hint;
     }
-
-    // public ErrorMapper(String error)
 }

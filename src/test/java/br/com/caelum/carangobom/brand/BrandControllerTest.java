@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.caelum.carangobom.brand.BrandController;
-import br.com.caelum.carangobom.brand.BrandService;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;

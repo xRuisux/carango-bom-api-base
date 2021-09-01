@@ -2,6 +2,7 @@ package br.com.caelum.carangobom.vehicle;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,11 +15,14 @@ public class Vehicle {
 	
 	@Id @GeneratedValue(strategy = IDENTITY)
 	private Long id;
+	@Column(nullable = false)
 	private Integer price;
+	@Column(nullable = false)
 	private Integer year;
+	@Column(nullable = false)
 	private String model;
 	@ManyToOne
-	private Brand brand;
+  	private Brand brand;
 
 	public Vehicle() {}
 

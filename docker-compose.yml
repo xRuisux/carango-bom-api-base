@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: carangobom
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5433"
+    volumes:
+      - db-volume-official:/var/lib/postgresql/data
+
+  api:
+    image: acelera/carangobom-api
+    environment:
+      DB_HOST: database
+    ports:
+      - "8080:8080"
+volumes:
+  db-volume-official:

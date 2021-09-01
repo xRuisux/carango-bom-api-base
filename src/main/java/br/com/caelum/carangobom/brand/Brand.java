@@ -3,9 +3,10 @@ package br.com.caelum.carangobom.brand;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.Size;
 
 import static javax.persistence.GenerationType.IDENTITY;
+
+import javax.persistence.Column;
 
 @Entity
 public class Brand {
@@ -13,7 +14,7 @@ public class Brand {
     @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Size(min = 2, message = "Deve ter {min} ou mais caracteres.")
+    @Column(nullable = false)
     private String name;
 
     public Brand() {

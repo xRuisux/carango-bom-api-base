@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.validation;
+package br.com.caelum.carangobom.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

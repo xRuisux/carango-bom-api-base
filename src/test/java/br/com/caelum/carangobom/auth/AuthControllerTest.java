@@ -22,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureTestEntityManager
 @Transactional
 class AuthControllerTest {
+    
     @Autowired
     private MockMvc mockMvc;
     private String url = "/auth";

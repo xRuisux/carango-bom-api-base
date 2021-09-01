@@ -11,10 +11,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.caelum.carangobom.brand.Brand;
-import javassist.NotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.List;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -22,34 +23,12 @@ class VehicleControllerTest {
 
     @Autowired
     private VehicleController vehicleController;
-    
-    // @MockBean
-    // private VehicleService vehicleService;
-    
-    // @MockBean
-    // private BrandService brandService;
 
     private UriComponentsBuilder uriBuilder;
-    
-    // @Autowired
-    // BrandService brandService;
-
-    // @Mock
-    // VehicleService vehicleService;
-
-    // @Mock
-    // VehicleRepository vehicleRepository;
-
-    // @Mock
-    // BrandRepository brandRepository;
-
         
     @BeforeEach
-    public void configuraMock() {
-        // openMocks(this);
-        
-        // vehicleService = new VehicleService();
-        // vehicleController = new VehicleController();
+    public void prepareTest() {
+
         uriBuilder = UriComponentsBuilder.fromUriString("http://localhost:8080");
 
     }
@@ -71,11 +50,12 @@ class VehicleControllerTest {
     void shouldReturnOkAfterVehicleUpdate() throws Exception {
         Brand brand = new Brand(1L, "Honda");
 
-        Vehicle vehicle = new Vehicle(800000, 2020, "CR-V", brand);
+        Vehicle vehicle = new Vehicle(900000, 2020, "CR-V", brand);
         VehicleForm form = new VehicleForm(vehicle);
 
         ResponseEntity<VehicleMapper> response = vehicleController.update(1L, form);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(900000, response.getBody().getPrice());
     }
 
     @Test
@@ -87,6 +67,28 @@ class VehicleControllerTest {
 
         assertThrows(ResponseStatusException.class, () -> {
             vehicleController.update(2L, form);
+        });
+    }
+
+    @Test
+    void shouldReturnAllVehicles() throws Exception {
+
+        ResponseEntity<List<VehicleMapper>> response = vehicleController.list(); 
+        assertEquals(1, response.getBody().size());
+    }
+
+    @Test
+    void shouldDeleteUserWhenItExists() throws Exception {
+
+        ResponseEntity<VehicleMapper> response = vehicleController.delete(1l); 
+        assertEquals(1L, response.getBody().getId());
+        assertEquals(2020, response.getBody().getYear());
+        assertEquals(900000 , response.getBody().getPrice());
+        assertEquals("CR-V", response.getBody().getModel());
+
+
+        assertThrows(ResponseStatusException.class,  () -> {
+            vehicleController.delete(1L);
         });
     }
 }

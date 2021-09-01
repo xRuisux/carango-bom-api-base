@@ -1,7 +1,15 @@
 package br.com.caelum.carangobom.vehicle;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Optional;
 
-public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
+import org.springframework.data.repository.Repository;
+
+public interface VehicleRepository extends Repository<Vehicle, Long> {
+
+    public List<Vehicle> findAllByOrderByIdDesc();
+    Optional<Vehicle> findById(Long id);
+    Optional<Vehicle> save(Vehicle vehicle);
+    Optional<Vehicle> delete(Vehicle vehicle);
 
 }

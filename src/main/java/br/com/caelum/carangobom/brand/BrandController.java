@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.com.caelum.carangobom.exceptions.InternalServerErrorException;
-
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -37,7 +35,7 @@ public class BrandController {
     }
 
     @PostMapping
-    public ResponseEntity<BrandMapper> post(@Valid @RequestBody BrandForm brandDto, UriComponentsBuilder uriBuilder) throws InternalServerErrorException {
+    public ResponseEntity<BrandMapper> post(@Valid @RequestBody BrandForm brandDto, UriComponentsBuilder uriBuilder) throws ResponseStatusException {
         Brand brand = brandDto.convertToBrand();
         brand = brandService.save(brand);
         URI location = uriBuilder.path("/brand/{id}").buildAndExpand(brand.getId()).toUri();
