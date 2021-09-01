@@ -5,4 +5,4 @@ INSERT INTO tbl_user (name, email, password) VALUES('Admin', 'admin2@email.com',
 INSERT INTO brand (name) VALUES('Honda');
 
 
-
+--INSERT into vehicle (brand_id, model, year, price)VALUES(1, 'CR-V', 2020, 800000 );

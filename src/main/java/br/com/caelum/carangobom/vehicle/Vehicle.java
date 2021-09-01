@@ -15,11 +15,8 @@ public class Vehicle {
 	
 	@Id @GeneratedValue(strategy = IDENTITY)
 	private Long id;
-	@Column(nullable = false)
 	private Integer price;
-	@Column(nullable = false)
 	private Integer year;
-	@Column(nullable = false)
 	private String model;
 	@ManyToOne
   	private Brand brand;

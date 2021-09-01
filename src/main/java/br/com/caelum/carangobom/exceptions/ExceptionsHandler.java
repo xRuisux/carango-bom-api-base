@@ -46,7 +46,7 @@ public class ExceptionsHandler {
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ErrorMapper> erroNotFoundException(ResponseStatusException exception) {
-        
+        System.out.println(exception.getMessage())
         return ResponseEntity.status(exception.getStatus()).body(new ErrorMapper(exception.getMessage()));
     }
 
