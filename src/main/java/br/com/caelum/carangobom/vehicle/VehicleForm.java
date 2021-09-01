@@ -6,12 +6,14 @@ import javax.validation.constraints.NotNull;
 
 import br.com.caelum.carangobom.marca.Brand;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
+@NoArgsConstructor
+@Getter
 class VehicleForm {
 	
 		@NotNull
-		@Getter
 		private Long brandId;
 		
 		@NotNull @NotEmpty
