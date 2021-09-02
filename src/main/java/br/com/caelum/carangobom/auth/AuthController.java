@@ -33,8 +33,4 @@ public class AuthController {
         String token = tokenService.generate(authentication);
         return ResponseEntity.ok(new AuthMapper(token, "Bearer"));
     }
-}
-        
-
-    
-
+}   
