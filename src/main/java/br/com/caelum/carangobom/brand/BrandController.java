@@ -1,6 +1,8 @@
 package br.com.caelum.carangobom.brand;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -23,6 +25,7 @@ public class BrandController {
 	}
 
     @GetMapping
+    @Cacheable(value = "brands")
     public List<Brand> get() {
     	return brandService.findAll();
     }
@@ -35,6 +38,7 @@ public class BrandController {
     }
 
     @PostMapping
+    @CacheEvict(cacheNames = "brands", allEntries = true)
     public ResponseEntity<BrandMapper> post(@Valid @RequestBody BrandForm brandDto, UriComponentsBuilder uriBuilder) throws ResponseStatusException {
         Brand brand = brandDto.convertToBrand();
         brand = brandService.save(brand);
@@ -43,12 +47,14 @@ public class BrandController {
     }
 
     @PutMapping("/{id}")
+    @CacheEvict(cacheNames = "brands", allEntries = true)
     public ResponseEntity<BrandMapper> put(@PathVariable Long id, @Valid @RequestBody BrandForm brandDto) throws ResponseStatusException {
         Brand brand = brandService.change(id, brandDto);
         return ResponseEntity.ok(new BrandMapper(brand));
     }
 
     @DeleteMapping("/{id}")
+    @CacheEvict(cacheNames = "brands", allEntries = true)
     public ResponseEntity<BrandMapper> delete(@PathVariable Long id) throws ResponseStatusException {
         Brand brand = brandService.delete(id);
         return ResponseEntity.ok(new BrandMapper(brand));       
