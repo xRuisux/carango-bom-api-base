@@ -21,7 +21,8 @@ class UserServiceTest {
 
     private List<User> expectedUsers = List.of(
         new User(1L, "Admin", "admin@email.com", "$2a$10$sFKmbxbG4ryhwPNx/l3pgOJSt.fW1z6YcUnuE2X8APA/Z3NI/oSpq"),
-        new User(2L, "Admin", "admin1@email.com", "$2a$10$sFKmbxbG4ryhwPNx/l3pgOJSt.fW1z6YcUnuE2X8APA/Z3NI/oSpq")
+        new User(2L, "Admin", "admin1@email.com", "$2a$10$sFKmbxbG4ryhwPNx/l3pgOJSt.fW1z6YcUnuE2X8APA/Z3NI/oSpq"),
+        new User(3L, "Admin", "admin1@email.com", "$2a$10$sFKmbxbG4ryhwPNx/l3pgOJSt.fW1z6YcUnuE2X8APA/Z3NI/oSpq")
     );
 
 
