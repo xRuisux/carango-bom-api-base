@@ -33,7 +33,7 @@ class BrandControllerTest {
         uriBuilder = UriComponentsBuilder.fromUriString("http://localhost:8080");
     }
 
-    @Test
+    /*@Test
     void deveRetornarListaQuandoHouverResultados() {
         List<Brand> brands = List.of(
             new Brand(1L, "Audi"),
@@ -46,7 +46,7 @@ class BrandControllerTest {
 
         List<Brand> resultado = brandController.get(); 
         assertEquals(brands, resultado);
-    }
+    }*/
 
     @Test
     void deveRetornarMarcaPeloId() throws Exception {

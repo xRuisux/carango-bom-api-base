@@ -1,6 +1,9 @@
 package br.com.caelum.carangobom.brand;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
@@ -24,8 +27,9 @@ public class BrandService {
 		this.brandRepository = brandRepository;
 	}
 
-    public List<Brand> findAll() {
-        return brandRepository.findAllByOrderByName();
+    public Page<Brand> findAll(int limit, int offset) {
+        Pageable page = PageRequest.of(offset, limit);
+        return brandRepository.findAllByOrderByName(page);
     }
 
     public List<IBrandReport> getMyReport() {

@@ -3,14 +3,17 @@ package br.com.caelum.carangobom.brand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import io.swagger.annotations.ApiParam;
+
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/brand")
@@ -26,8 +29,18 @@ public class BrandController {
 
     @GetMapping
     @Cacheable(value = "brands")
-    public List<Brand> get() {
-    	return brandService.findAll();
+    public Page<Brand> get(
+        @ApiParam(
+            name =  "limit",
+            type = "int",
+            value = "quantidade de elementos por página",
+            example = "10",
+            required = true
+        )
+        @RequestParam int limit, 
+        @RequestParam int offset
+    ) {
+    	return brandService.findAll(limit, offset);
     }
 
     @GetMapping("/{id}")
